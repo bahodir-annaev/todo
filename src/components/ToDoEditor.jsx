@@ -1,15 +1,6 @@
 import * as React from "react";
-
-const PRIORITY_LOW = 0;
-const PRIORITY_NORMAL = 1;
-const PRIORITY_HIGH = 2;
-
-function Task(){
-    this.description = "";
-    this.priority = PRIORITY_NORMAL;
-    this.complete = false;
-}
-
+import {constants} from "../constants";
+import {Task} from "../models/Task";
 
 export class ToDoEditor extends React.Component {
     constructor(props){
@@ -21,8 +12,9 @@ export class ToDoEditor extends React.Component {
         this.handlePriorityChange = this._handlePriorityChange.bind(this);
     }
 
-    _handleAdd(){
-        this.props.addTask(this.state);
+    _handleAdd(event){
+        this.props.addTask({...this.state});
+        event.preventDefault();
     }
 
     _handleDescriptionChange(event){
@@ -38,14 +30,16 @@ export class ToDoEditor extends React.Component {
             <div>
                 <h3>Add new todo</h3>
                 <div>
-                    <input type="text" value={this.state.description} onChange={this.handleDescriptionChange} placeholder="Enter description"/>
-                    <label htmlFor="task-priority"> Priority </label>
-                    <select id="task-priority" value={this.state.priority} onChange={this.handlePriorityChange}>
-                        <option value={PRIORITY_LOW}>Low</option>
-                        <option value={PRIORITY_NORMAL}>Normal</option>
-                        <option value={PRIORITY_HIGH}>High</option>
-                    </select>
-                    <input type="button" value="Add" onClick={this.handleAdd}/>
+                    <form onSubmit={this.handleAdd}>
+                        <input type="text" value={this.state.description} onChange={this.handleDescriptionChange} placeholder="Enter description" />
+                        <label htmlFor="task-priority"> Priority </label>
+                        <select id="task-priority" value={this.state.priority} onChange={this.handlePriorityChange}>
+                            <option value={constants.PRIORITY_LOW}>Low</option>
+                            <option value={constants.PRIORITY_NORMAL}>Normal</option>
+                            <option value={constants.PRIORITY_HIGH}>High</option>
+                        </select>
+                        <input type="submit" value="Add"/>
+                    </form>
                 </div>
             </div>
         )

@@ -6,8 +6,8 @@ export class ToDoList extends React.Component {
         const todoItemsList = this.props.tasks.map((task, index) => {
             return (
                 <ToDoItem task={task} 
-                removeTask={() => {this.props.removeTask(index)}} 
-                toggleComplete={() => {this.props.toggleComplete(index)}}/>
+                removeTask={() => this.props.removeTask(index)} 
+                toggleComplete={() => this.props.toggleComplete(index)}/>
             );
         });
         return (

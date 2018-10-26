@@ -1,10 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { App } from "./components/App";
+import { Task } from "./models/Task";
 
 const tasks = [
-    {description: "Learn React", complete: false, priority: 1},
-    {description: "Learn TypeScript", complete: false, priority: 1}
+    new Task({description: "Learn React"}),
+    new Task({description: "Learn TypeScript"})
 ];
 
 ReactDOM.render(<App tasks = {tasks}/>, document.getElementById("root"));

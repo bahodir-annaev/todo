@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ToDoEditor } from "./ToDoEditor";
 import { ToDoList } from "./ToDoList";
+import { Task } from "../models/Task";
 
 export class App extends React.Component {
     constructor(props){
@@ -20,20 +21,22 @@ export class App extends React.Component {
         });
     }
 
-    _removeTask(index){
+    _removeTask(removeTaskIndex){
         this.setState((oldState) => {
-            const leftTasks = oldState.tasks.filter((task,taskIndex) => taskIndex !== index);
+            const leftTasks = oldState.tasks.filter((task,taskIndex) => taskIndex !== removeTaskIndex);
             return {tasks: leftTasks}
         });
     }
 
-    _toggleComplete(index){
+    _toggleComplete(toggleTaskIndex){
         this.setState((oldState) => {
             const updatedTasks = oldState.tasks.map((task, taskIndex) =>{
-                if(taskIndex == index) {
-                    task.complete = !task.complete;
+                if(taskIndex == toggleTaskIndex) {
+                    return new Task({...task, complete: !task.complete});
+                }else{
+                    return task;
                 }
-                return task;
+                
             });
             return {tasks: updatedTasks}
         });
