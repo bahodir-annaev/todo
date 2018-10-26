@@ -6,32 +6,46 @@ export class App extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            tasks: props.tasks
+            tasks: [...props.tasks]
         }
 
-        this.addTask = this.addTask.bind(this);
-        this.removeTask = this.removeTask.bind(this);
+        this.addTask = this._addTask.bind(this);
+        this.removeTask = this._removeTask.bind(this);
+        this.toggleComplete = this._toggleComplete.bind(this);
     }
 
-    addTask(newTask){
-        this.setState({tasks: [...this.state.tasks, newTask]});
+    _addTask(newTask){
+        this.setState((oldState) => {
+            return {tasks: [...oldState.tasks, newTask]}
+        });
     }
 
-    removeTask(index){
-        const leftTasks = this.state.tasks.filter((t,i) => {return i !== index;})
-        this.setState({tasks: leftTasks});
+    _removeTask(index){
+        this.setState((oldState) => {
+            const leftTasks = oldState.tasks.filter((task,taskIndex) => taskIndex !== index);
+            return {tasks: leftTasks}
+        });
     }
 
-    toggleComplete(index){
-        const updatedTasks;
+    _toggleComplete(index){
+        this.setState((oldState) => {
+            const updatedTasks = oldState.tasks.map((task, taskIndex) =>{
+                if(taskIndex == index) {
+                    task.complete = !task.complete;
+                }
+                return task;
+            });
+            return {tasks: updatedTasks}
+        });
+        
     }
 
     render() {
         return (
             <div>
                 <h1>TO DOs</h1>
-                <ToDoEditor addTaskCallback={this.addTask}/>
-                <ToDoList tasks={this.state.tasks} removeTaskCallback={this.removeTask}/>
+                <ToDoEditor addTask={this.addTask}/>
+                <ToDoList tasks={this.state.tasks} removeTask={this.removeTask} toggleComplete={this.toggleComplete}/>
             </div>
         );
     }
