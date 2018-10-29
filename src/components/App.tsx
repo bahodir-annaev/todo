@@ -3,36 +3,29 @@ import { ToDoEditor } from "./ToDoEditor";
 import { ToDoList } from "./ToDoList";
 import { Task } from "../models/Task";
 
-export class App extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            tasks: [...props.tasks]
-        }
+type TaskList = {tasks: Array<Task>};
 
-        this.addTask = this._addTask.bind(this);
-        this.removeTask = this._removeTask.bind(this);
-        this.toggleComplete = this._toggleComplete.bind(this);
-    }
+export class App extends React.Component<TaskList, TaskList> {
+    readonly state = {tasks: [...this.props.tasks]};
 
-    _addTask(newTask){
+    addTask = (newTask: Task) => {
         this.setState((oldState) => {
             return {tasks: [...oldState.tasks, newTask]}
         });
     }
 
-    _removeTask(removeTaskIndex){
+    removeTask = (removeTaskIndex: number) =>{
         this.setState((oldState) => {
             const leftTasks = oldState.tasks.filter((task,taskIndex) => taskIndex !== removeTaskIndex);
             return {tasks: leftTasks}
         });
     }
 
-    _toggleComplete(toggleTaskIndex){
+    toggleComplete = (toggleTaskIndex: number) =>{
         this.setState((oldState) => {
             const updatedTasks = oldState.tasks.map((task, taskIndex) =>{
                 if(taskIndex == toggleTaskIndex) {
-                    return new Task({...task, complete: !task.complete});
+                    return new Task(task.description, task.priority, !task.complete);
                 }else{
                     return task;
                 }
@@ -43,7 +36,7 @@ export class App extends React.Component {
         
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
             <div>
                 <h1>TO DOs</h1>

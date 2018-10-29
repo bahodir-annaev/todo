@@ -4,8 +4,8 @@ import { App } from "./components/App";
 import { Task } from "./models/Task";
 
 const tasks = [
-    new Task({description: "Learn React"}),
-    new Task({description: "Learn TypeScript"})
+    new Task("Learn React"),
+    new Task("Learn TypeScript")
 ];
 
 ReactDOM.render(<App tasks = {tasks}/>, document.getElementById("root"));
