@@ -1,48 +1,54 @@
-import * as React from "react";
-import { ToDoEditor } from "./ToDoEditor";
-import { ToDoList } from "./ToDoList";
-import { Task } from "../models/Task";
+import * as React from 'react';
+import { Task } from '../models/Task';
+import { ToDoEditor } from './ToDoEditor';
+import { ToDoList } from './ToDoList';
 
-type TaskList = {tasks: Array<Task>};
+interface ITaskList {
+  tasks: Task[];
+}
 
-export class App extends React.Component<TaskList, TaskList> {
-    readonly state = {tasks: [...this.props.tasks]};
+export class App extends React.Component<ITaskList, ITaskList> {
+  readonly state = { tasks: [ ...this.props.tasks ] };
 
-    addTask = (newTask: Task) => {
-        this.setState((oldState) => {
-            return {tasks: [...oldState.tasks, newTask]}
-        });
-    }
+  addTask = (newTask: Task) => {
+    this.setState((oldState) => {
+      return { tasks: [ ...oldState.tasks, newTask ] };
+    });
+  };
 
-    removeTask = (removeTaskIndex: number) =>{
-        this.setState((oldState) => {
-            const leftTasks = oldState.tasks.filter((task,taskIndex) => taskIndex !== removeTaskIndex);
-            return {tasks: leftTasks}
-        });
-    }
+  removeTask = (removeTaskIndex: number) => {
+    this.setState((oldState) => {
+      const leftTasks = oldState.tasks.filter((task, taskIndex) => taskIndex !== removeTaskIndex);
 
-    toggleComplete = (toggleTaskIndex: number) =>{
-        this.setState((oldState) => {
-            const updatedTasks = oldState.tasks.map((task, taskIndex) =>{
-                if(taskIndex == toggleTaskIndex) {
-                    return new Task(task.description, task.priority, !task.complete);
-                }else{
-                    return task;
-                }
-                
-            });
-            return {tasks: updatedTasks}
-        });
-        
-    }
+      return { tasks: leftTasks };
+    });
+  };
 
-    render(): React.ReactNode {
-        return (
-            <div>
-                <h1>TO DOs</h1>
-                <ToDoEditor addTask={this.addTask}/>
-                <ToDoList tasks={this.state.tasks} removeTask={this.removeTask} toggleComplete={this.toggleComplete}/>
-            </div>
-        );
-    }
+  render(): React.ReactNode {
+    return (
+      <div>
+        <h1>TO DOs</h1>
+        <ToDoEditor addTask={this.addTask} />
+        <ToDoList
+          tasks={this.state.tasks}
+          removeTask={this.removeTask}
+          toggleComplete={this.toggleComplete}
+        />
+      </div>
+    );
+  }
+
+  toggleComplete = (toggleTaskIndex: number) => {
+    this.setState((oldState) => {
+      const updatedTasks = oldState.tasks.map((task, taskIndex) => {
+        if (taskIndex === toggleTaskIndex) {
+          return new Task(task.description, task.priority, !task.complete);
+        } else {
+          return task;
+        }
+      });
+
+      return { tasks: updatedTasks };
+    });
+  };
 }

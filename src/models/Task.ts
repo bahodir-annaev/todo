@@ -1,6 +1,9 @@
-import {Constants} from "../constants";
+import { Constants } from '../constants';
 
-export class Task{
-    constructor(public description:string = "", public priority = Constants.PRIORITY_NORMAL, public complete:boolean = false){
-    }
+export class Task {
+  constructor(
+    public description = '',
+    public priority = Constants.PRIORITY_NORMAL,
+    public complete = false,
+  ) {}
 }
