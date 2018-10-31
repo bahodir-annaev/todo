@@ -9,3 +9,11 @@
 .item-container {
   padding: 2px;
 }
+
+.filter-container {
+  margin-top: 20px;
+}
+
+.active-filter {
+  font-weight: bold;
+}

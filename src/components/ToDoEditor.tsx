@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Constants } from '../constants';
+import { Priorities } from '../constants';
 import { Task } from '../models/Task';
 
 export class ToDoEditor extends React.Component<{ addTask(task: Task): void }, Task> {
@@ -7,6 +7,7 @@ export class ToDoEditor extends React.Component<{ addTask(task: Task): void }, T
 
   handleAdd = (event: React.FormEvent<HTMLFormElement>) => {
     this.props.addTask(Task.create({ ...this.state }));
+    this.setState(Task.create({}));
     event.preventDefault();
   };
 
@@ -36,9 +37,9 @@ export class ToDoEditor extends React.Component<{ addTask(task: Task): void }, T
               value={this.state.priority}
               onChange={this.handlePriorityChange}
             >
-              <option value={Constants.PRIORITY_LOW}>Low</option>
-              <option value={Constants.PRIORITY_NORMAL}>Normal</option>
-              <option value={Constants.PRIORITY_HIGH}>High</option>
+              <option value={Priorities.PRIORITY_LOW}>Low</option>
+              <option value={Priorities.PRIORITY_NORMAL}>Normal</option>
+              <option value={Priorities.PRIORITY_HIGH}>High</option>
             </select>
             <input type='submit' value='Add' />
           </form>

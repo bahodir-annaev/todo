@@ -1,18 +1,27 @@
 import * as React from 'react';
+import { Filters } from '../constants';
 import { Task } from '../models/Task';
+import { Filter } from './Filter';
 import { ToDoEditor } from './ToDoEditor';
 import { ToDoList } from './ToDoList';
 
 interface ITaskList {
+  activeFilter: Filters;
   tasks: Task[];
 }
 
 export class App extends React.Component<ITaskList, ITaskList> {
-  readonly state = { tasks: [ ...this.props.tasks ] };
+  readonly state = { activeFilter: this.props.activeFilter, tasks: [ ...this.props.tasks ] };
 
   addTask = (newTask: Task) => {
     this.setState((oldState) => {
       return { tasks: [ ...oldState.tasks, newTask ] };
+    });
+  };
+
+  changeFilter = (filterToActivate: Filters) => {
+    this.setState((oldState) => {
+      return { activeFilter: filterToActivate };
     });
   };
 
@@ -30,10 +39,12 @@ export class App extends React.Component<ITaskList, ITaskList> {
         <h1>TO DOs</h1>
         <ToDoEditor addTask={this.addTask} />
         <ToDoList
+          activeFilter={this.state.activeFilter}
           tasks={this.state.tasks}
           removeTask={this.removeTask}
           toggleComplete={this.toggleComplete}
         />
+        <Filter activeFilter={this.state.activeFilter} changeFilter={this.changeFilter} />
       </div>
     );
   }
