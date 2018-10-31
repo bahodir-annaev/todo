@@ -1,3 +1,11 @@
-.complete{
-    text-decoration: line-through;
+.complete {
+  text-decoration: line-through;
+}
+
+.item-desc {
+  padding: 0 5px 0 2px;
+}
+
+.item-container {
+  padding: 2px;
 }

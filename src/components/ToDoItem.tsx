@@ -10,15 +10,15 @@ export interface IToDoItemProps {
 export class ToDoItem extends React.Component<IToDoItemProps> {
   render(): React.ReactNode {
     return (
-      <div>
+      <div className='item-container'>
         <input
           type='checkbox'
           onClick={this.props.toggleComplete}
           checked={this.props.task.complete}
-        />&nbsp;
-        <span className={this.props.task.complete ? 'complete' : ''}>
+        />
+        <span className={this.props.task.complete ? 'complete item-desc' : 'item-desc'}>
           {this.props.task.description}
-        </span>&nbsp;
+        </span>
         <input type='button' onClick={this.props.removeTask} value='Remove' />
       </div>
     );

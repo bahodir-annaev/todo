@@ -42,7 +42,7 @@ export class App extends React.Component<ITaskList, ITaskList> {
     this.setState((oldState) => {
       const updatedTasks = oldState.tasks.map((task, taskIndex) => {
         if (taskIndex === toggleTaskIndex) {
-          return new Task(task.description, task.priority, !task.complete);
+          return Task.create({ ...task, complete: !task.complete });
         } else {
           return task;
         }

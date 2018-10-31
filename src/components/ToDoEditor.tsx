@@ -3,19 +3,19 @@ import { Constants } from '../constants';
 import { Task } from '../models/Task';
 
 export class ToDoEditor extends React.Component<{ addTask(task: Task): void }, Task> {
-  readonly state = new Task();
+  readonly state = Task.create({});
 
   handleAdd = (event: React.FormEvent<HTMLFormElement>) => {
-    this.props.addTask(new Task(this.state.description, this.state.priority, this.state.complete));
+    this.props.addTask(Task.create({ ...this.state }));
     event.preventDefault();
   };
 
   handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ description: event.target.value } as Task);
+    this.setState({ description: event.target.value });
   };
 
   handlePriorityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    this.setState({ priority: parseInt(event.target.value, 10) } as Task);
+    this.setState({ priority: parseInt(event.target.value, 10) });
   };
 
   render(): React.ReactNode {
