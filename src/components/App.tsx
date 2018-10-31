@@ -5,6 +5,8 @@ import { Filter } from './Filter';
 import { ToDoEditor } from './ToDoEditor';
 import { ToDoList } from './ToDoList';
 
+const settings = require('../settings.json');
+
 interface ITaskList {
   activeFilter: Filters;
   tasks: Task[];
@@ -39,12 +41,15 @@ export class App extends React.Component<ITaskList, ITaskList> {
         <h1>TO DOs</h1>
         <ToDoEditor addTask={this.addTask} />
         <ToDoList
+          settings={settings}
           activeFilter={this.state.activeFilter}
           tasks={this.state.tasks}
           removeTask={this.removeTask}
           toggleComplete={this.toggleComplete}
         />
-        <Filter activeFilter={this.state.activeFilter} changeFilter={this.changeFilter} />
+        {settings.functionality.filtering ? (
+          <Filter activeFilter={this.state.activeFilter} changeFilter={this.changeFilter} />
+        ) : null}
       </div>
     );
   }

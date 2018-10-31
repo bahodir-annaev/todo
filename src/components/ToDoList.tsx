@@ -5,6 +5,7 @@ import { ToDoItem } from './ToDoItem';
 
 export interface IToDoListProps {
   activeFilter: Filters;
+  settings: any;
   tasks: Task[];
   removeTask(index: number): void;
   toggleComplete(index: number): void;
@@ -17,6 +18,7 @@ export class ToDoList extends React.Component<IToDoListProps> {
       if (this.filterTask(task)) continue;
       toDoItemsList.push(
         <ToDoItem
+          appearance={this.props.settings.appearance}
           task={task}
           key={index}
           removeTask={() => this.props.removeTask(index)}
