@@ -3,11 +3,11 @@ import { Priorities } from '../constants';
 import { Task } from '../models/Task';
 
 export class ToDoEditor extends React.Component<{ addTask(task: Task): void }, Task> {
-  readonly state = Task.create({});
+  readonly state = {...Task.create({})};
 
   handleAdd = (event: React.FormEvent<HTMLFormElement>) => {
     this.props.addTask(Task.create({ ...this.state }));
-    this.setState(Task.create({}));
+    this.setState({...Task.create({})});
     event.preventDefault();
   };
 

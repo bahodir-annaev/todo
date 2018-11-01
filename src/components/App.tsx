@@ -5,7 +5,7 @@ import { Filter } from './Filter';
 import { ToDoEditor } from './ToDoEditor';
 import { ToDoList } from './ToDoList';
 
-const settings = require('../settings.json');
+const settings = require('../../static/settings.json');
 
 interface ITaskList {
   activeFilter: Filters;

@@ -1,0 +1,39 @@
+{
+  "$id": "/static/settings.schema.json",
+  "title": "ToDoApp",
+  "description": "Setting json schema for configuring ToDo App",
+  "type": "object",
+  "properties": {
+    "appearance": {
+      "type": "object",
+      "properties": {
+        "finished": {
+          "type": "object",
+          "properties": {
+            "color": {
+              "type": "string",
+              "default": "grey"
+            },
+            "applyTo": {
+              "type": "string",
+              "oneOf": [ { "enum": [ "background", "text" ] } ]
+            }
+          }
+        }
+      }
+    },
+    "functionality": {
+      "type": "object",
+      "properties": {
+        "filtering": {
+          "type": "boolean",
+          "default": true
+        },
+        "priority": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  }
+}
