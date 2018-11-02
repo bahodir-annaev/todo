@@ -6,30 +6,31 @@
   "properties": {
     "appearance": {
       "type": "object",
+      "description": "Set of properties to control visual aspects of the App",
       "properties": {
-        "finished": {
+        "finishedTask": {
           "type": "object",
           "properties": {
             "color": {
               "type": "string",
               "default": "grey"
             },
-            "applyTo": {
-              "type": "string",
-              "oneOf": [ { "enum": [ "background", "text" ] } ]
-            }
+            "applyTo": { "enum": [ "background", "text" ] }
           }
         }
       }
     },
     "functionality": {
       "type": "object",
+      "description": "Set of properties to control functional parts of the App",
       "properties": {
         "filtering": {
+          "description": "Determines wether to show Filter component or not.",
           "type": "boolean",
           "default": true
         },
         "priority": {
+          "description": "Determines wether to show priority select in ToDoEditor",
           "type": "boolean",
           "default": true
         }

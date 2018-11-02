@@ -2,13 +2,13 @@
   "title": "ToDoApp",
   "description": "Setting json schema for configuring ToDo App",
   "appearance": {
-    "finished": {
+    "finishedTask": {
       "color": "rgba(144, 144, 144, 0.5)",
-      "applyTo": "background"
+      "applyTo": "text"
     }
   },
   "functionality": {
     "filtering": true,
-    "priority": true
+    "priority": false
   }
 }

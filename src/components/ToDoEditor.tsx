@@ -1,14 +1,20 @@
 import * as React from 'react';
 import { Priorities } from '../constants';
 import { Task } from '../models/Task';
+import { IToDoFunctionality } from '../models/ToDoSettingsModel';
 
-export class ToDoEditor extends React.Component<{ addTask(task: Task): void }, Task> {
-  readonly state = {...Task.create({})};
+interface IToDoEditorProps {
+  functionality: IToDoFunctionality;
+  addTask(task: Task): void;
+}
+
+export class ToDoEditor extends React.Component<IToDoEditorProps, Task> {
+  readonly state = { ...Task.create({}) };
 
   handleAdd = (event: React.FormEvent<HTMLFormElement>) => {
-    this.props.addTask(Task.create({ ...this.state }));
-    this.setState({...Task.create({})});
     event.preventDefault();
+    this.props.addTask(Task.create({ ...this.state }));
+    this.setState({ ...Task.create({}) });
   };
 
   handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,12 +25,12 @@ export class ToDoEditor extends React.Component<{ addTask(task: Task): void }, T
     this.setState({ priority: parseInt(event.target.value, 10) });
   };
 
-  render(): React.ReactNode {
+  render() {
     return (
       <div>
         <h3>Add new todo</h3>
         <div>
-          <form onSubmit={this.handleAdd} action='#'>
+          <form onSubmit={this.handleAdd}>
             <input
               type='text'
               value={this.state.description}
@@ -32,16 +38,18 @@ export class ToDoEditor extends React.Component<{ addTask(task: Task): void }, T
               placeholder='Enter description'
             />
             <label htmlFor='task-priority'> Priority </label>
-            <select
-              id='task-priority'
-              value={this.state.priority}
-              onChange={this.handlePriorityChange}
-            >
-              <option value={Priorities.PRIORITY_LOW}>Low</option>
-              <option value={Priorities.PRIORITY_NORMAL}>Normal</option>
-              <option value={Priorities.PRIORITY_HIGH}>High</option>
-            </select>
-            <input type='submit' value='Add' />
+            {this.props.functionality.priority ? (
+              <select
+                id='task-priority'
+                value={this.state.priority}
+                onChange={this.handlePriorityChange}
+              >
+                <option value={Priorities.PRIORITY_LOW}>Low</option>
+                <option value={Priorities.PRIORITY_NORMAL}>Normal</option>
+                <option value={Priorities.PRIORITY_HIGH}>High</option>
+              </select>
+            ) : null}
+            <button type='submit'>Add</button>
           </form>
         </div>
       </div>

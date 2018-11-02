@@ -1,19 +1,27 @@
 import * as React from 'react';
 import { Filters } from '../constants';
 import { Task } from '../models/Task';
+import { IToDoSettingsModel } from '../models/ToDoSettingsModel';
 import { Filter } from './Filter';
 import { ToDoEditor } from './ToDoEditor';
 import { ToDoList } from './ToDoList';
 
-const settings = require('../../static/settings.json');
+interface IAppProps {
+  activeFilter: Filters;
+  settings: IToDoSettingsModel;
+  tasks: Task[];
+}
 
-interface ITaskList {
+interface IAppState {
   activeFilter: Filters;
   tasks: Task[];
 }
 
-export class App extends React.Component<ITaskList, ITaskList> {
-  readonly state = { activeFilter: this.props.activeFilter, tasks: [ ...this.props.tasks ] };
+export class App extends React.Component<IAppProps, IAppState> {
+  readonly state = {
+    activeFilter: this.props.activeFilter,
+    tasks: [ ...this.props.tasks ],
+  };
 
   addTask = (newTask: Task) => {
     this.setState((oldState) => {
@@ -27,37 +35,40 @@ export class App extends React.Component<ITaskList, ITaskList> {
     });
   };
 
-  removeTask = (removeTaskIndex: number) => {
+  removeTask = (removeTaskId: number) => {
     this.setState((oldState) => {
-      const leftTasks = oldState.tasks.filter((task, taskIndex) => taskIndex !== removeTaskIndex);
+      const leftTasks = oldState.tasks.filter((task) => task.id !== removeTaskId);
 
       return { tasks: leftTasks };
     });
   };
 
-  render(): React.ReactNode {
+  render() {
     return (
       <div>
         <h1>TO DOs</h1>
-        <ToDoEditor addTask={this.addTask} />
+        <ToDoEditor addTask={this.addTask} functionality={this.props.settings.functionality} />
         <ToDoList
-          settings={settings}
+          settings={this.props.settings}
           activeFilter={this.state.activeFilter}
           tasks={this.state.tasks}
           removeTask={this.removeTask}
           toggleComplete={this.toggleComplete}
         />
-        {settings.functionality.filtering ? (
-          <Filter activeFilter={this.state.activeFilter} changeFilter={this.changeFilter} />
-        ) : null}
+
+        <Filter
+          showFiltering={this.props.settings.functionality.filtering}
+          activeFilter={this.state.activeFilter}
+          changeFilter={this.changeFilter}
+        />
       </div>
     );
   }
 
-  toggleComplete = (toggleTaskIndex: number) => {
+  toggleComplete = (toggleTaskId: number) => {
     this.setState((oldState) => {
-      const updatedTasks = oldState.tasks.map((task, taskIndex) => {
-        if (taskIndex === toggleTaskIndex) {
+      const updatedTasks = oldState.tasks.map((task) => {
+        if (task.id === toggleTaskId) {
           return Task.create({ ...task, complete: !task.complete });
         } else {
           return task;

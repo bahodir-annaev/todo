@@ -1,47 +1,48 @@
 import * as React from 'react';
 import { Filters } from '../constants';
 import { Task } from '../models/Task';
+import { IToDoSettingsModel } from '../models/ToDoSettingsModel';
 import { ToDoItem } from './ToDoItem';
 
-export interface IToDoListProps {
+interface IToDoListProps {
   activeFilter: Filters;
-  settings: any;
+  settings: IToDoSettingsModel;
   tasks: Task[];
   removeTask(index: number): void;
   toggleComplete(index: number): void;
 }
 
 export class ToDoList extends React.Component<IToDoListProps> {
-  render(): React.ReactNode {
-    const toDoItemsList: JSX.Element[] = [];
-    for (const [ index, task ] of this.props.tasks.entries()) {
-      if (this.filterTask(task)) continue;
-      toDoItemsList.push(
+  render() {
+    const toDoItemsList = this.filterTasks(this.props.tasks).map((task) => {
+      return (
         <ToDoItem
           appearance={this.props.settings.appearance}
           task={task}
-          key={index}
-          removeTask={() => this.props.removeTask(index)}
-          toggleComplete={() => this.props.toggleComplete(index)}
-        />,
+          key={task.id}
+          removeTask={() => this.props.removeTask(task.id)}
+          toggleComplete={() => this.props.toggleComplete(task.id)}
+        />
       );
-    }
+    });
 
     return <div>{toDoItemsList}</div>;
   }
 
-  private filterTask = (task: Task) => {
-    switch (this.props.activeFilter) {
-      case Filters.ACTIVE: {
-        return task.complete;
-        break;
+  private filterTasks = (tasks: Task[]) => {
+    return tasks.filter((task) => {
+      switch (this.props.activeFilter) {
+        case Filters.ACTIVE: {
+          return !task.complete;
+          break;
+        }
+        case Filters.FINISHED: {
+          return task.complete;
+          break;
+        }
+        default:
+          return true;
       }
-      case Filters.FINISHED: {
-        return !task.complete;
-        break;
-      }
-      default:
-        return false;
-    }
+    });
   };
 }

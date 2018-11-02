@@ -3,31 +3,35 @@ import { Filters } from '../constants';
 
 interface IFilterProps {
   activeFilter: Filters;
+  showFiltering: boolean;
   changeFilter(filterToActivate: Filters): void;
 }
 
-export const Filter: React.SFC<IFilterProps> = (props: IFilterProps) => {
-  return (
+export const Filter = (props: IFilterProps) => {
+  return props.showFiltering ? (
     <div className='filter-container'>
       Filter
-      <input
+      <button
         type='button'
-        value='All'
         onClick={() => props.changeFilter(Filters.ALL)}
         className={props.activeFilter === Filters.ALL ? 'active-filter' : ''}
-      />
-      <input
+      >
+        All
+      </button>
+      <button
         type='button'
-        value='Finished'
         onClick={() => props.changeFilter(Filters.FINISHED)}
         className={props.activeFilter === Filters.FINISHED ? 'active-filter' : ''}
-      />
-      <input
+      >
+        Finished
+      </button>
+      <button
         type='button'
-        value='Active'
         onClick={() => props.changeFilter(Filters.ACTIVE)}
         className={props.activeFilter === Filters.ACTIVE ? 'active-filter' : ''}
-      />
+      >
+        Active
+      </button>
     </div>
-  );
+  ) : null;
 };
