@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel ./src/index.html -p 3000 --open",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -14,11 +14,28 @@
     "react-dom": "^16.5.2"
   },
   "devDependencies": {
+    "@types/jest": "^23.3.9",
     "@types/react": "^16.4.18",
     "@types/react-dom": "^16.0.9",
+    "jest": "^23.6.0",
     "lerna": "^3.4.3",
     "parcel-bundler": "^1.10.3",
+    "ts-jest": "^23.10.4",
     "tslint": "^5.11.0",
     "typescript": "^3.1.3"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/application/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/application/__mocks__/styleMock.js",
+      "@wg/functional": "<rootDir>/application/packages/utils/functional",
+      "@wg/immutable": "<rootDir>/application/packages/utils/immutable",
+      "@wg/(.*)": "<rootDir>/application/packages/$1"
+    },
+    "transform": {
+      "^.+\\.(ts|tsx)?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+    "moduleFileExtensions": [ "ts", "tsx", "js", "jsx", "json", "node" ]
   }
 }
