@@ -27,7 +27,6 @@
     "**/*.spec.ts"
   ],
   "include": [
-      "src/**/*",
-      "packages/"
+      "src/**/*"
   ]
 }

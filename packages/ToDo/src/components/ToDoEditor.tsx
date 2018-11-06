@@ -8,13 +8,17 @@ interface IToDoEditorProps {
   addTask(task: Task): void;
 }
 
-export class ToDoEditor extends React.Component<IToDoEditorProps, Task> {
-  readonly state = { ...Task.create({}) };
+interface IToDoEditorState {
+  description: string;
+  priority: Priorities;
+}
+export class ToDoEditor extends React.Component<IToDoEditorProps, IToDoEditorState> {
+  readonly state = { description: '', priority: Priorities.PRIORITY_NORMAL };
 
   handleAdd = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     this.props.addTask(Task.create({ ...this.state }));
-    this.setState({ ...Task.create({}) });
+    this.setState({ description: '', priority: Priorities.PRIORITY_NORMAL });
   };
 
   handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {

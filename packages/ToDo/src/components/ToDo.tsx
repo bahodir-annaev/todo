@@ -6,18 +6,18 @@ import { Filter } from './Filter';
 import { ToDoEditor } from './ToDoEditor';
 import { ToDoList } from './ToDoList';
 
-interface IAppProps {
+interface IToDoProps {
   activeFilter: Filters;
   settings: IToDoSettingsModel;
   tasks: Task[];
 }
 
-interface IAppState {
+interface IToDoState {
   activeFilter: Filters;
   tasks: Task[];
 }
 
-export class App extends React.Component<IAppProps, IAppState> {
+export class ToDo extends React.Component<IToDoProps, IToDoState> {
   readonly state = {
     activeFilter: this.props.activeFilter,
     tasks: [ ...this.props.tasks ],

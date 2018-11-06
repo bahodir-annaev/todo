@@ -9,6 +9,6 @@
   },
   "functionality": {
     "filtering": true,
-    "priority": false
+    "priority": true
   }
 }
