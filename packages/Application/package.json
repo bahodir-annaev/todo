@@ -1,16 +1,16 @@
 {
-  "name": "Application",
+  "name": "@pkg/application",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "ToDo": "1.0.0"
+    "react-dom": "^16.5.2"
   },
   "devDependencies": {
     "@types/react": "^16.4.18",
-    "@types/react-dom": "^16.0.9"
+    "@types/react-dom": "^16.0.9",
+    "@pkg/todo": "1.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -7,11 +7,11 @@ const defaultTask = {
 };
 
 describe('Task model tests', () => {
-  test('create function without parameters', () => {
+  test('static method create with empty object', () => {
     expect(Task.create({})).toMatchObject(defaultTask);
   });
 
-  test('create task with description', () => {
+  test('static method create with description', () => {
     expect(Task.create({ description: 'New Task' })).toMatchObject({
       ...defaultTask,
       description: 'New Task',

@@ -144,7 +144,7 @@
         ],
         "eofline": true,
         "linebreak-style": [
-            false,
+            true,
             "LF"
         ],
         "max-classes-per-file": false,

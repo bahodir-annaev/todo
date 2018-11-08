@@ -1,4 +1,4 @@
-import { Filters, IToDoSettingsModel, Task, ToDo } from 'ToDo';
+import { Filters, IToDoSettingsModel, Task, ToDo } from '@pkg/todo';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
