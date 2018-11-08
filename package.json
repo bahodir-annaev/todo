@@ -14,10 +14,13 @@
     "react-dom": "^16.5.2"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.1.15",
     "@types/jest": "^23.3.9",
     "@types/react": "^16.4.18",
     "@types/react-dom": "^16.0.9",
     "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.7.0",
+    "enzyme-to-json": "^3.3.4",
     "jest": "^23.6.0",
     "lerna": "^3.4.3",
     "parcel-bundler": "^1.10.3",
@@ -41,6 +44,8 @@
       "^.+\\.(ts|tsx)?$": "ts-jest"
     },
     "testRegex": "/__tests__/.*\\.test\\.(ts|tsx)$",
-    "moduleFileExtensions": [ "ts", "tsx", "js", "json" ]
+    "moduleFileExtensions": [ "ts", "tsx", "js", "json" ],
+    "snapshotSerializers": [ "enzyme-to-json/serializer" ],
+    "setupFiles": [ "<rootDir>/src/setupTest.js" ]
   }
 }

@@ -1,4 +1,4 @@
-import { Task } from '../src/models/Task';
+import { Task } from '../Task';
 
 const defaultTask = {
   complete: false,
