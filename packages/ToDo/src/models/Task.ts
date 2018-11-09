@@ -2,10 +2,10 @@ import { Priorities } from '../constants';
 
 let id = 0;
 export class Task {
-  public complete = false;
-  public description = '';
-  public id = 0;
-  public priority = Priorities.PRIORITY_NORMAL;
+  complete = false;
+  description = '';
+  id = 0;
+  priority = Priorities.PRIORITY_NORMAL;
 
   constructor(complete?: boolean, description?: string, priority?: Priorities) {
     this.id = id++;
