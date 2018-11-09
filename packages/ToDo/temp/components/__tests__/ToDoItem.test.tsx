@@ -5,7 +5,7 @@ import { Task } from '../../models/Task';
 import { ToDoItem } from '../ToDoItem';
 
 const setup = (propsToChange: object, taskProperties?: object) => {
-  const applyTo: 'text' | 'background' = 'text';
+  const applyTo = 'text';
   const props = Object.assign(
     {
       appearance: {
