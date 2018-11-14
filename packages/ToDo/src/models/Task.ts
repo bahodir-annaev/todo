@@ -1,20 +1,31 @@
+import { Record } from 'immutable';
 import { Priorities } from '../constants';
 
-let id = 0;
-export class Task {
-  complete = false;
-  description = '';
-  id = 0;
-  priority = Priorities.PRIORITY_NORMAL;
+interface ITaskParams {
+  complete?: boolean;
+  description?: string;
+  id?: number;
+  priority?: Priorities;
+}
 
-  constructor(complete?: boolean, description?: string, priority?: Priorities) {
-    this.id = id++;
-    this.complete = complete || this.complete;
-    this.description = description || this.description;
-    this.priority = priority || this.priority;
+let id = 0;
+export class Task extends Record({
+  complete: false,
+  description: '',
+  id: 0,
+  priority: Priorities.PRIORITY_NORMAL,
+}) {
+  constructor(props: ITaskParams) {
+    super(props);
   }
 
-  static create(props: Partial<Task>): Task {
-    return new Task(props.complete, props.description, props.priority);
+  static create(props: ITaskParams): Task {
+    const task = props.id ? new Task({ ...props }) : new Task({ ...props, id: id++ });
+
+    return task;
+  }
+
+  toggle() {
+    return this.set('complete', !this.complete) as this;
   }
 }

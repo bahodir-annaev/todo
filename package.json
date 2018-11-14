@@ -15,12 +15,14 @@
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.15",
+    "@types/immutable": "^3.8.7",
     "@types/jest": "^23.3.9",
     "@types/react": "^16.4.18",
     "@types/react-dom": "^16.0.9",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "enzyme-to-json": "^3.3.4",
+    "immutable": "^4.0.0-rc.12",
     "jest": "^23.6.0",
     "lerna": "^3.4.3",
     "parcel-bundler": "^1.10.3",
@@ -37,15 +39,28 @@
         "tsConfig": "<rootDir>/tsconfig.json"
       }
     },
-    "modulePaths": [ "<rootDir>/node_modules" ],
-    "roots": [ "<rootDir>/packages" ],
+    "modulePaths": [
+      "<rootDir>/node_modules"
+    ],
+    "roots": [
+      "<rootDir>/packages"
+    ],
     "verbose": true,
     "transform": {
       "^.+\\.(ts|tsx)?$": "ts-jest"
     },
     "testRegex": "/__tests__/.*\\.test\\.(ts|tsx)$",
-    "moduleFileExtensions": [ "ts", "tsx", "js", "json" ],
-    "snapshotSerializers": [ "enzyme-to-json/serializer" ],
-    "setupFiles": [ "<rootDir>/src/setupTest.js" ]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "setupFiles": [
+      "<rootDir>/src/setupTest.js"
+    ]
   }
 }

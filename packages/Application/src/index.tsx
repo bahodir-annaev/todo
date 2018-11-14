@@ -7,7 +7,8 @@ const tasks = [
   Task.create({ description: 'Learn TypeScript' }),
 ];
 
-const settings: IToDoSettingsModel = require('../static/settings.json');
+const settingsJson = require('../static/settings.json');
+const settings = new IToDoSettingsModel(settingsJson);
 
 ReactDOM.render(
   <ToDo activeFilter={Filters.ALL} settings={settings} tasks={tasks} />,

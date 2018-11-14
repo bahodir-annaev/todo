@@ -5,7 +5,8 @@
   "dependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "enzyme": "^3.7.0"
+    "enzyme": "^3.7.0",
+    "immutable": "^4.0.0-rc.12"
   },
   "devDependencies": {
     "@types/react": "^16.4.18",

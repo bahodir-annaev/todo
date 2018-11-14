@@ -1,3 +1,4 @@
+import { Record } from 'immutable';
 import * as React from 'react';
 import { Priorities } from '../constants';
 import { Task } from '../models/Task';
@@ -8,25 +9,38 @@ interface IToDoEditorProps {
   addTask(task: Task): void;
 }
 
-interface IToDoEditorState {
+const defaultEditorState: IEditorState = {
+  description: '',
+  priority: Priorities.PRIORITY_NORMAL,
+};
+
+const EditorStateRecord = Record(defaultEditorState);
+
+interface IEditorState {
   description: string;
   priority: Priorities;
 }
+
+interface IToDoEditorState {
+  editorState: Record<IEditorState>;
+}
 export class ToDoEditor extends React.Component<IToDoEditorProps, IToDoEditorState> {
-  readonly state = { description: '', priority: Priorities.PRIORITY_NORMAL };
+  readonly state = { editorState: EditorStateRecord(defaultEditorState) };
 
   handleAdd = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    this.props.addTask(Task.create({ ...this.state }));
-    this.setState({ description: '', priority: Priorities.PRIORITY_NORMAL });
+    this.props.addTask(Task.create({ ...this.state.editorState.toJS() }));
+    this.setState({ editorState: EditorStateRecord(defaultEditorState) });
   };
 
   handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ description: event.target.value });
+    this.setState({ editorState: this.state.editorState.set('description', event.target.value) });
   };
 
   handlePriorityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    this.setState({ priority: parseInt(event.target.value, 10) });
+    this.setState({
+      editorState: this.state.editorState.set('priority', parseInt(event.target.value, 10)),
+    });
   };
 
   render() {
@@ -37,7 +51,7 @@ export class ToDoEditor extends React.Component<IToDoEditorProps, IToDoEditorSta
           <form onSubmit={this.handleAdd}>
             <input
               type='text'
-              value={this.state.description}
+              value={this.state.editorState.get('description')}
               onChange={this.handleDescriptionChange}
               placeholder='Enter description'
             />
@@ -45,7 +59,7 @@ export class ToDoEditor extends React.Component<IToDoEditorProps, IToDoEditorSta
             {this.props.functionality.priority ? (
               <select
                 id='task-priority'
-                value={this.state.priority}
+                value={this.state.editorState.get('priority')}
                 onChange={this.handlePriorityChange}
               >
                 <option value={Priorities.PRIORITY_LOW}>Low</option>

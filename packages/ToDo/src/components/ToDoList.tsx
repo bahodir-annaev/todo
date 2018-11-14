@@ -3,11 +3,12 @@ import { Filters } from '../constants';
 import { Task } from '../models/Task';
 import { IToDoSettingsModel } from '../models/ToDoSettingsModel';
 import { ToDoItem } from './ToDoItem';
+import { List } from 'immutable';
 
 interface IToDoListProps {
   activeFilter: Filters;
   settings: IToDoSettingsModel;
-  tasks: Task[];
+  tasks: List<Task>;
   removeTask(index: number): void;
   toggleComplete(index: number): void;
 }
@@ -29,7 +30,7 @@ export class ToDoList extends React.Component<IToDoListProps> {
     return <div>{toDoItemsList}</div>;
   }
 
-  private filterTasks = (tasks: Task[]) => {
+  private filterTasks = (tasks: List<Task>) => {
     return tasks.filter((task) => {
       switch (this.props.activeFilter) {
         case Filters.ACTIVE: {
