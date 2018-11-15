@@ -2,25 +2,30 @@ import { shallow } from 'enzyme';
 import * as React from 'react';
 
 import { Task } from '../../models/Task';
-import { applyColorTo } from '../../models/ToDoSettingsModel';
+import {
+  applyColorTo,
+  TaskAppearanceRecord,
+  ToDoAppearanceRecord,
+} from '../../models/ToDoSettingsModel';
 import { ToDoItem } from '../ToDoItem';
 
 const setup = (propsToChange: object, taskProperties?: object) => {
   const applyTo = applyColorTo.text;
-  const props = Object.assign(
-    {
-      appearance: {
-        finishedTask: {
-          applyTo,
-          color: 'grey',
-        },
-      },
-      removeTask: jest.fn(),
-      task: Object.assign({ ...Task.create({ description: 'Test Task' }) }, taskProperties),
-      toggleComplete: jest.fn(),
-    },
-    propsToChange,
-  );
+  const task = Task.create({ description: 'Test Task' });
+  const props = {
+    appearance: ToDoAppearanceRecord({
+      finishedTask: TaskAppearanceRecord({
+        applyTo,
+        color: 'grey',
+      }),
+    }),
+    removeTask: jest.fn(),
+    task,
+    toggleComplete: jest.fn(),
+  };
+
+  props.appearance = props.appearance.mergeIn([ 'finishedTask' ], propsToChange);
+  props.task = props.task.merge({ ...taskProperties });
 
   const todoItem = shallow(<ToDoItem {...props} />);
 

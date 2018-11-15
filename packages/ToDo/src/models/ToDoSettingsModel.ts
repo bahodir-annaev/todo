@@ -5,21 +5,24 @@ export const enum applyColorTo {
   text = 'text',
 }
 
-const TaskAppearanceRecord = Record({ applyTo: applyColorTo.background, color: 'grey' });
-const ToDoAppearanceRecord = Record({ finishedTask: TaskAppearanceRecord() });
-const ToDoFunctionalityRecord = Record({ filtering: true, priority: true });
+export const TaskAppearanceRecord = Record({ applyTo: applyColorTo.background, color: 'grey' });
+export const ToDoAppearanceRecord = Record({ finishedTask: TaskAppearanceRecord() });
+export const ToDoFunctionalityRecord = Record({ filtering: true, priority: true });
+
+export type IToDoAppearanceRecord = RecordOf<IToDoAppearance>;
+export type IToDoFunctionalityRecord = RecordOf<IToDoFunctionality>;
 
 export class ToDoSettingsModel extends Record({
   appearance: ToDoAppearanceRecord(),
   functionality: ToDoFunctionalityRecord(),
 }) {
-  appearance!: RecordOf<IToDoAppearance>;
-  functionality!: RecordOf<IToDoFunctionality>;
+  appearance!: IToDoAppearanceRecord;
+  functionality!: IToDoFunctionalityRecord;
   constructor(params?: Partial<ToDoSettingsModel>) {
     params ? super(params) : super();
   }
 
-  static create(settings) {
+  static create(settings: IToDoSettingsModel) {
     const appearance = ToDoAppearanceRecord({
       finishedTask: TaskAppearanceRecord({ ...settings.appearance.finishedTask }),
     });
@@ -41,4 +44,9 @@ interface ITaskAppearance {
 interface IToDoFunctionality {
   filtering: boolean;
   priority: boolean;
+}
+
+interface IToDoSettingsModel {
+  appearance: IToDoAppearance;
+  functionality: IToDoFunctionality;
 }

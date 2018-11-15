@@ -8,11 +8,11 @@ const defaultTask = {
 
 describe('Task model tests', () => {
   test('static method create with empty object', () => {
-    expect(Task.create({})).toMatchObject(defaultTask);
+    expect(Task.create({}).toJS()).toMatchObject(defaultTask);
   });
 
   test('static method create with description', () => {
-    expect(Task.create({ description: 'New Task' })).toMatchObject({
+    expect(Task.create({ description: 'New Task' }).toJS()).toMatchObject({
       ...defaultTask,
       description: 'New Task',
     });
