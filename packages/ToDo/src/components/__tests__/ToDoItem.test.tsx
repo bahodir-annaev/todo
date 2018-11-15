@@ -2,10 +2,11 @@ import { shallow } from 'enzyme';
 import * as React from 'react';
 
 import { Task } from '../../models/Task';
+import { applyColorTo } from '../../models/ToDoSettingsModel';
 import { ToDoItem } from '../ToDoItem';
 
 const setup = (propsToChange: object, taskProperties?: object) => {
-  const applyTo = 'text';
+  const applyTo = applyColorTo.text;
   const props = Object.assign(
     {
       appearance: {

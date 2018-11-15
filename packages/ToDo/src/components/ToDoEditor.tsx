@@ -2,10 +2,10 @@ import { Record } from 'immutable';
 import * as React from 'react';
 import { Priorities } from '../constants';
 import { Task } from '../models/Task';
-import { IToDoFunctionality } from '../models/ToDoSettingsModel';
+import { IToDoFunctionalityRecord } from '../models/ToDoSettingsModel';
 
 interface IToDoEditorProps {
-  functionality: IToDoFunctionality;
+  functionality: IToDoFunctionalityRecord;
   addTask(task: Task): void;
 }
 
@@ -56,7 +56,7 @@ export class ToDoEditor extends React.Component<IToDoEditorProps, IToDoEditorSta
               placeholder='Enter description'
             />
             <label htmlFor='task-priority'> Priority </label>
-            {this.props.functionality.priority ? (
+            {this.props.functionality.get('priority') ? (
               <select
                 id='task-priority'
                 value={this.state.editorState.get('priority')}

@@ -1,13 +1,13 @@
+import { List } from 'immutable';
 import * as React from 'react';
 import { Filters } from '../constants';
 import { Task } from '../models/Task';
-import { IToDoSettingsModel } from '../models/ToDoSettingsModel';
+import { ToDoSettingsModel } from '../models/ToDoSettingsModel';
 import { ToDoItem } from './ToDoItem';
-import { List } from 'immutable';
 
 interface IToDoListProps {
   activeFilter: Filters;
-  settings: IToDoSettingsModel;
+  settings: ToDoSettingsModel;
   tasks: List<Task>;
   removeTask(index: number): void;
   toggleComplete(index: number): void;
@@ -18,7 +18,7 @@ export class ToDoList extends React.Component<IToDoListProps> {
     const toDoItemsList = this.filterTasks(this.props.tasks).map((task) => {
       return (
         <ToDoItem
-          appearance={this.props.settings.appearance}
+          appearance={this.props.settings.get('appearance')}
           task={task}
           key={task.id}
           removeTask={() => this.props.removeTask(task.id)}

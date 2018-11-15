@@ -2,14 +2,14 @@ import { List, Record } from 'immutable';
 import * as React from 'react';
 import { Filters } from '../constants';
 import { Task } from '../models/Task';
-import { IToDoSettingsModel } from '../models/ToDoSettingsModel';
+import { ToDoSettingsModel } from '../models/ToDoSettingsModel';
 import { Filter } from './Filter';
 import { ToDoEditor } from './ToDoEditor';
 import { ToDoList } from './ToDoList';
 
 interface IToDoProps {
   activeFilter: Filters;
-  settings: IToDoSettingsModel;
+  settings: ToDoSettingsModel;
   tasks: Task[];
 }
 
@@ -61,7 +61,10 @@ export class ToDo extends React.Component<IToDoProps, IToDoAppState> {
     return (
       <div>
         <h1>TO DOs</h1>
-        <ToDoEditor addTask={this.addTask} functionality={this.props.settings.functionality} />
+        <ToDoEditor
+          addTask={this.addTask}
+          functionality={this.props.settings.get('functionality')}
+        />
         <ToDoList
           settings={this.props.settings}
           activeFilter={this.state.todoState.get('activeFilter')}
@@ -71,7 +74,7 @@ export class ToDo extends React.Component<IToDoProps, IToDoAppState> {
         />
 
         <Filter
-          showFiltering={this.props.settings.functionality.filtering}
+          showFiltering={this.props.settings.getIn([ 'functionality', 'filtering' ])}
           activeFilter={this.state.todoState.get('activeFilter')}
           changeFilter={this.changeFilter}
         />

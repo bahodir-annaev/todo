@@ -1,24 +1,27 @@
 import * as React from 'react';
 import { Task } from '../models/Task';
-import { IToDoAppearance, IToDoFunctionality } from '../models/ToDoSettingsModel';
+import { IToDoAppearanceRecord } from '../models/ToDoSettingsModel';
 
 interface IToDoItemProps {
-  appearance: IToDoAppearance;
+  appearance: IToDoAppearanceRecord;
   task: Task;
   removeTask(event: React.MouseEvent): void;
   toggleComplete(event: React.ChangeEvent<HTMLInputElement>): void;
 }
 
 export class ToDoItem extends React.Component<IToDoItemProps> {
-  getFinishedTaskStyle = (finishedTask: { applyTo: string; color: string }) => {
-    const cssProperty = finishedTask.applyTo === 'background' ? 'backgroundColor' : 'color';
+  getFinishedTaskStyle = (appearance: IToDoAppearanceRecord) => {
+    const cssProperty =
+      appearance.getIn([ 'finishedTask', 'applyTo' ]) === 'background'
+        ? 'backgroundColor'
+        : 'color';
     const style: React.CSSProperties = {};
-    style[cssProperty] = finishedTask.color;
+    style[cssProperty] = appearance.getIn([ 'finishedTask', 'color' ]);
 
     return style;
   };
   render() {
-    const finished = this.getFinishedTaskStyle(this.props.appearance.finishedTask);
+    const finished = this.getFinishedTaskStyle(this.props.appearance);
 
     return (
       <div className='item-container'>
