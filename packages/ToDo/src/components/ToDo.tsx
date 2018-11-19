@@ -1,4 +1,4 @@
-import { List, Record } from 'immutable';
+import { List, Record, OrderedMap } from 'immutable';
 import * as React from 'react';
 import { Filters } from '../constants';
 import { TaskModel } from '../models/TaskModel';
@@ -13,7 +13,10 @@ interface IToDoProps {
   tasks: TaskModel[];
 }
 
-class ToDoStateRecord extends Record({ activeFilter: Filters.ALL, tasks: List<TaskModel>() }) {}
+class ToDoStateRecord extends Record({
+  activeFilter: Filters.ALL,
+  tasks: OrderedMap<number, TaskModel>(),
+}) {}
 
 interface IToDoAppState {
   todoState: ToDoStateRecord;
@@ -23,14 +26,16 @@ export class ToDo extends React.Component<IToDoProps, IToDoAppState> {
   readonly state = {
     todoState: new ToDoStateRecord({
       activeFilter: this.props.activeFilter,
-      tasks: List(this.props.tasks),
+      tasks: OrderedMap(this.props.tasks.map((task) => [ task.id, task ] as [number, TaskModel])),
     }),
   };
 
   addTask = (newTask: TaskModel) => {
     this.setState((oldState) => {
       return {
-        todoState: oldState.todoState.update('tasks', (oldTasks) => oldTasks.push(newTask)),
+        todoState: oldState.todoState.update('tasks', (oldTasks) =>
+          oldTasks.set(newTask.id, newTask),
+        ),
       };
     });
   };
@@ -44,7 +49,7 @@ export class ToDo extends React.Component<IToDoProps, IToDoAppState> {
   removeTask = (removeTaskId: number) => {
     this.setState((oldState) => {
       const updatedState = oldState.todoState.update('tasks', (tasks) => {
-        return tasks.filter((task) => task.id !== removeTaskId);
+        return tasks.filter((task, key) => key !== removeTaskId);
       });
 
       return { todoState: updatedState };
@@ -75,8 +80,7 @@ export class ToDo extends React.Component<IToDoProps, IToDoAppState> {
 
   toggleFinished = (toggleTaskId: number) => {
     this.setState((oldState) => {
-      const toggleIndex = oldState.todoState.tasks.findIndex((task) => task.id === toggleTaskId);
-      const updatedState = oldState.todoState.updateIn([ 'tasks', toggleIndex ], (task) =>
+      const updatedState = oldState.todoState.updateIn([ 'tasks', toggleTaskId ], (task) =>
         task.toggle(),
       );
 

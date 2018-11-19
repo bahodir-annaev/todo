@@ -1,4 +1,4 @@
-import { List } from 'immutable';
+import { OrderedMap } from 'immutable';
 import * as React from 'react';
 import { Filters } from '../constants';
 import { TaskModel } from '../models/TaskModel';
@@ -8,29 +8,29 @@ import { ToDoItem } from './ToDoItem';
 interface IToDoListProps {
   activeFilter: Filters;
   settings: ToDoSettingsModel;
-  tasks: List<TaskModel>;
+  tasks: OrderedMap<number, TaskModel>;
   removeTask(index: number): void;
   toggleFinished(index: number): void;
 }
 
 export class ToDoList extends React.Component<IToDoListProps> {
   render() {
-    const toDoItemsList = this.filterTasks(this.props.tasks).map((task) => {
-      return (
+    const toDoItemsList = this.filterTasks(this.props.tasks)
+      .entrySeq()
+      .map(([ key, task ]) => (
         <ToDoItem
           appearance={this.props.settings.appearance}
           task={task}
-          key={task.id}
-          removeTask={() => this.props.removeTask(task.id)}
-          toggleFinished={() => this.props.toggleFinished(task.id)}
+          key={key}
+          removeTask={() => this.props.removeTask(key)}
+          toggleFinished={() => this.props.toggleFinished(key)}
         />
-      );
-    });
+      ));
 
-    return <div>{toDoItemsList}</div>;
+    return <div id='task-list'>{toDoItemsList}</div>;
   }
 
-  private filterTasks = (tasks: List<TaskModel>) => {
+  private filterTasks = (tasks: OrderedMap<number, TaskModel>) => {
     return tasks.filter((task) => {
       switch (this.props.activeFilter) {
         case Filters.ACTIVE:
