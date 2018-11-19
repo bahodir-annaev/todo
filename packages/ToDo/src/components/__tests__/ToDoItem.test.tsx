@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
 
-import { Task } from '../../models/Task';
+import { TaskModel } from '../../models/TaskModel';
 import {
   applyColorTo,
   TaskAppearanceRecord,
@@ -11,17 +11,17 @@ import { ToDoItem } from '../ToDoItem';
 
 const setup = (propsToChange: object, taskProperties?: object) => {
   const applyTo = applyColorTo.text;
-  const task = Task.create({ description: 'Test Task' });
+  const task = TaskModel.create({ description: 'Test Task' });
   const props = {
-    appearance: ToDoAppearanceRecord({
-      finishedTask: TaskAppearanceRecord({
+    appearance: new ToDoAppearanceRecord({
+      finishedTask: new TaskAppearanceRecord({
         applyTo,
         color: 'grey',
       }),
     }),
     removeTask: jest.fn(),
     task,
-    toggleComplete: jest.fn(),
+    toggleFinished: jest.fn(),
   };
 
   props.appearance = props.appearance.mergeIn([ 'finishedTask' ], propsToChange);
@@ -41,11 +41,11 @@ describe('ToDoItem component', () => {
     expect(todoItem).toMatchSnapshot();
   });
 
-  test('toggleComplete method should be called', () => {
+  test('toggleFinished method should be called', () => {
     const { props, todoItem } = setup({});
     todoItem.find('input').simulate('change');
 
-    expect(props.toggleComplete).toHaveBeenCalled();
+    expect(props.toggleFinished).toHaveBeenCalled();
   });
 
   test('removeTask method should be called', () => {
@@ -55,9 +55,9 @@ describe('ToDoItem component', () => {
     expect(props.removeTask).toHaveBeenCalled();
   });
 
-  test('completed task should be checked and should have finished className', () => {
-    const { todoItem } = setup({}, { complete: true });
+  test('finished task should be checked and should have finished className', () => {
+    const { todoItem } = setup({}, { finished: true });
     expect(todoItem.find('input').props().checked).toBe(true);
-    expect(todoItem.find('span').hasClass('complete')).toBe(true);
+    expect(todoItem.find('span').hasClass('finished')).toBe(true);
   });
 });

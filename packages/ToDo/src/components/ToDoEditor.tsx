@@ -1,36 +1,29 @@
 import { Record } from 'immutable';
 import * as React from 'react';
 import { Priorities } from '../constants';
-import { Task } from '../models/Task';
-import { IToDoFunctionalityRecord } from '../models/ToDoSettingsModel';
+import { TaskModel } from '../models/TaskModel';
+import { ToDoFunctionalityRecord } from '../models/ToDoSettingsModel';
 
 interface IToDoEditorProps {
-  functionality: IToDoFunctionalityRecord;
-  addTask(task: Task): void;
+  functionality: ToDoFunctionalityRecord;
+  addTask(task: TaskModel): void;
 }
 
-const defaultEditorState: IEditorState = {
+class EditorStateRecord extends Record({
   description: '',
   priority: Priorities.PRIORITY_NORMAL,
-};
-
-const EditorStateRecord = Record(defaultEditorState);
-
-interface IEditorState {
-  description: string;
-  priority: Priorities;
-}
+}) {}
 
 interface IToDoEditorState {
-  editorState: Record<IEditorState>;
+  editorState: EditorStateRecord;
 }
 export class ToDoEditor extends React.Component<IToDoEditorProps, IToDoEditorState> {
-  readonly state = { editorState: EditorStateRecord(defaultEditorState) };
+  readonly state = { editorState: new EditorStateRecord() };
 
   handleAdd = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    this.props.addTask(Task.create({ ...this.state.editorState.toJS() }));
-    this.setState({ editorState: EditorStateRecord(defaultEditorState) });
+    this.props.addTask(TaskModel.create(this.state.editorState.toJS()));
+    this.setState({ editorState: new EditorStateRecord() });
   };
 
   handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,15 +44,15 @@ export class ToDoEditor extends React.Component<IToDoEditorProps, IToDoEditorSta
           <form onSubmit={this.handleAdd}>
             <input
               type='text'
-              value={this.state.editorState.get('description')}
+              value={this.state.editorState.description}
               onChange={this.handleDescriptionChange}
               placeholder='Enter description'
             />
             <label htmlFor='task-priority'> Priority </label>
-            {this.props.functionality.get('priority') ? (
+            {this.props.functionality.priority ? (
               <select
                 id='task-priority'
-                value={this.state.editorState.get('priority')}
+                value={this.state.editorState.priority}
                 onChange={this.handlePriorityChange}
               >
                 <option value={Priorities.PRIORITY_LOW}>Low</option>

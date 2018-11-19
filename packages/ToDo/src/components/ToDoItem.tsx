@@ -1,38 +1,38 @@
 import * as React from 'react';
-import { Task } from '../models/Task';
-import { IToDoAppearanceRecord } from '../models/ToDoSettingsModel';
+import { TaskModel } from '../models/TaskModel';
+import { ToDoAppearanceRecord } from '../models/ToDoSettingsModel';
 
 interface IToDoItemProps {
-  appearance: IToDoAppearanceRecord;
-  task: Task;
+  appearance: ToDoAppearanceRecord;
+  task: TaskModel;
   removeTask(event: React.MouseEvent): void;
-  toggleComplete(event: React.ChangeEvent<HTMLInputElement>): void;
+  toggleFinished(event: React.ChangeEvent<HTMLInputElement>): void;
 }
 
 export class ToDoItem extends React.Component<IToDoItemProps> {
-  getFinishedTaskStyle = (appearance: IToDoAppearanceRecord) => {
+  getFinishedTaskStyle = (appearance: ToDoAppearanceRecord) => {
     const cssProperty =
-      appearance.getIn([ 'finishedTask', 'applyTo' ]) === 'background'
-        ? 'backgroundColor'
-        : 'color';
+      appearance.finishedTask.applyTo === 'background' ? 'backgroundColor' : 'color';
     const style: React.CSSProperties = {};
-    style[cssProperty] = appearance.getIn([ 'finishedTask', 'color' ]);
+    style[cssProperty] = appearance.finishedTask.color;
 
     return style;
   };
   render() {
-    const finished = this.getFinishedTaskStyle(this.props.appearance);
+    const finished = this.props.task.finished
+      ? this.getFinishedTaskStyle(this.props.appearance)
+      : {};
 
     return (
       <div className='item-container'>
         <input
           type='checkbox'
-          onChange={this.props.toggleComplete}
-          checked={this.props.task.complete}
+          onChange={this.props.toggleFinished}
+          checked={this.props.task.finished}
         />
         <span
-          className={`${this.props.task.complete ? 'complete' : ''} item-desc`}
-          style={this.props.task.complete ? finished : {}}
+          className={`${this.props.task.finished ? 'finished' : ''} item-desc`}
+          style={finished}
         >
           {this.props.task.description}
         </span>

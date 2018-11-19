@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel ./src/index.html -p 3000 --open",
+    "start": "parcel ./src/index.html -p 3000",
     "test": "jest"
   },
   "author": "",
@@ -39,28 +39,15 @@
         "tsConfig": "<rootDir>/tsconfig.json"
       }
     },
-    "modulePaths": [
-      "<rootDir>/node_modules"
-    ],
-    "roots": [
-      "<rootDir>/packages"
-    ],
+    "modulePaths": [ "<rootDir>/node_modules" ],
+    "roots": [ "<rootDir>/packages" ],
     "verbose": true,
     "transform": {
       "^.+\\.(ts|tsx)?$": "ts-jest"
     },
     "testRegex": "/__tests__/.*\\.test\\.(ts|tsx)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "setupFiles": [
-      "<rootDir>/src/setupTest.js"
-    ]
+    "moduleFileExtensions": [ "ts", "tsx", "js", "json" ],
+    "snapshotSerializers": [ "enzyme-to-json/serializer" ],
+    "setupFiles": [ "<rootDir>/src/setupTest.js" ]
   }
 }

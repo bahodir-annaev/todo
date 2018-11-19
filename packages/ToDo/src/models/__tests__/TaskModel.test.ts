@@ -1,18 +1,18 @@
-import { Task } from '../Task';
+import { TaskModel } from '../TaskModel';
 
 const defaultTask = {
-  complete: false,
   description: '',
+  finished: false,
   priority: 1,
 };
 
 describe('Task model tests', () => {
   test('static method create with empty object', () => {
-    expect(Task.create({}).toJS()).toMatchObject(defaultTask);
+    expect(TaskModel.create({}).toJS()).toMatchObject(defaultTask);
   });
 
   test('static method create with description', () => {
-    expect(Task.create({ description: 'New Task' }).toJS()).toMatchObject({
+    expect(TaskModel.create({ description: 'New Task' }).toJS()).toMatchObject({
       ...defaultTask,
       description: 'New Task',
     });

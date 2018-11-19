@@ -5,40 +5,41 @@ export const enum applyColorTo {
   text = 'text',
 }
 
-export const TaskAppearanceRecord = Record({ applyTo: applyColorTo.background, color: 'grey' });
-export const ToDoAppearanceRecord = Record({ finishedTask: TaskAppearanceRecord() });
-export const ToDoFunctionalityRecord = Record({ filtering: true, priority: true });
+export class TaskAppearanceRecord extends Record({
+  applyTo: applyColorTo.background,
+  color: 'grey',
+}) {}
 
-export type IToDoAppearanceRecord = RecordOf<IToDoAppearance>;
-export type IToDoFunctionalityRecord = RecordOf<IToDoFunctionality>;
+export class ToDoAppearanceRecord extends Record({ finishedTask: new TaskAppearanceRecord() }) {}
+
+export class ToDoFunctionalityRecord extends Record({ filtering: true, priority: true }) {}
 
 export class ToDoSettingsModel extends Record({
-  appearance: ToDoAppearanceRecord(),
-  functionality: ToDoFunctionalityRecord(),
+  appearance: new ToDoAppearanceRecord(),
+  functionality: new ToDoFunctionalityRecord(),
 }) {
-  appearance!: IToDoAppearanceRecord;
-  functionality!: IToDoFunctionalityRecord;
-  constructor(params?: Partial<ToDoSettingsModel>) {
-    params ? super(params) : super();
-  }
-
   static create(settings: IToDoSettingsModel) {
-    const appearance = ToDoAppearanceRecord({
-      finishedTask: TaskAppearanceRecord({ ...settings.appearance.finishedTask }),
-    });
-    const functionality = ToDoFunctionalityRecord({ ...settings.functionality });
+    if (settings) {
+      const appearance =
+        settings.appearance && settings.appearance.finishedTask
+          ? new ToDoAppearanceRecord({
+              finishedTask: new TaskAppearanceRecord(settings.appearance.finishedTask),
+            })
+          : new ToDoAppearanceRecord();
 
-    return new ToDoSettingsModel({ appearance, functionality });
+      const functionality = settings.functionality
+        ? new ToDoFunctionalityRecord(settings.functionality)
+        : new ToDoFunctionalityRecord();
+
+      return new ToDoSettingsModel({ appearance, functionality });
+    } else {
+      return new ToDoSettingsModel();
+    }
   }
 }
 
 interface IToDoAppearance {
-  finishedTask: RecordOf<ITaskAppearance>;
-}
-
-interface ITaskAppearance {
-  applyTo: applyColorTo;
-  color: string;
+  finishedTask: TaskAppearanceRecord;
 }
 
 interface IToDoFunctionality {
