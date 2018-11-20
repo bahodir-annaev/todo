@@ -1,4 +1,4 @@
-import { List, Record, OrderedMap } from 'immutable';
+import { OrderedMap, Record } from 'immutable';
 import * as React from 'react';
 import { Filters } from '../constants';
 import { TaskModel } from '../models/TaskModel';
@@ -49,7 +49,7 @@ export class ToDo extends React.Component<IToDoProps, IToDoAppState> {
   removeTask = (removeTaskId: number) => {
     this.setState((oldState) => {
       const updatedState = oldState.todoState.update('tasks', (tasks) => {
-        return tasks.filter((task, key) => key !== removeTaskId);
+        return tasks.filter((_, key) => key !== removeTaskId);
       });
 
       return { todoState: updatedState };
@@ -62,7 +62,7 @@ export class ToDo extends React.Component<IToDoProps, IToDoAppState> {
         <h1>TO DOs</h1>
         <ToDoEditor addTask={this.addTask} functionality={this.props.settings.functionality} />
         <ToDoList
-          settings={this.props.settings}
+          appearance={this.props.settings.appearance}
           activeFilter={this.state.todoState.activeFilter}
           tasks={this.state.todoState.tasks}
           removeTask={this.removeTask}
@@ -80,9 +80,9 @@ export class ToDo extends React.Component<IToDoProps, IToDoAppState> {
 
   toggleFinished = (toggleTaskId: number) => {
     this.setState((oldState) => {
-      const updatedState = oldState.todoState.updateIn([ 'tasks', toggleTaskId ], (task) =>
-        task.toggle(),
-      );
+      const updatedState = oldState.todoState.update('tasks', (tasks) => {
+        return tasks.update(toggleTaskId, (task) => task.toggle());
+      });
 
       return { todoState: updatedState };
     });

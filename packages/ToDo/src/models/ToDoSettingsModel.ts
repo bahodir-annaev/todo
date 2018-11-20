@@ -14,22 +14,25 @@ export class ToDoAppearanceRecord extends Record({ finishedTask: new TaskAppeara
 
 export class ToDoFunctionalityRecord extends Record({ filtering: true, priority: true }) {}
 
+const DEFAULT_APPEARANCE = new ToDoAppearanceRecord();
+const DEFAULT_FUNCTIONALITY = new ToDoFunctionalityRecord();
+
 export class ToDoSettingsModel extends Record({
-  appearance: new ToDoAppearanceRecord(),
-  functionality: new ToDoFunctionalityRecord(),
+  appearance: DEFAULT_APPEARANCE,
+  functionality: DEFAULT_FUNCTIONALITY,
 }) {
-  static create(settings: IToDoSettingsModel) {
+  static create(settings?: IToDoSettingsModel) {
     if (settings) {
       const appearance =
         settings.appearance && settings.appearance.finishedTask
           ? new ToDoAppearanceRecord({
               finishedTask: new TaskAppearanceRecord(settings.appearance.finishedTask),
             })
-          : new ToDoAppearanceRecord();
+          : DEFAULT_APPEARANCE;
 
       const functionality = settings.functionality
         ? new ToDoFunctionalityRecord(settings.functionality)
-        : new ToDoFunctionalityRecord();
+        : DEFAULT_FUNCTIONALITY;
 
       return new ToDoSettingsModel({ appearance, functionality });
     } else {
@@ -48,6 +51,6 @@ interface IToDoFunctionality {
 }
 
 interface IToDoSettingsModel {
-  appearance: IToDoAppearance;
-  functionality: IToDoFunctionality;
+  appearance?: IToDoAppearance;
+  functionality?: IToDoFunctionality;
 }

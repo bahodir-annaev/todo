@@ -2,12 +2,12 @@ import { OrderedMap } from 'immutable';
 import * as React from 'react';
 import { Filters } from '../constants';
 import { TaskModel } from '../models/TaskModel';
-import { ToDoSettingsModel } from '../models/ToDoSettingsModel';
+import { ToDoAppearanceRecord } from '../models/ToDoSettingsModel';
 import { ToDoItem } from './ToDoItem';
 
 interface IToDoListProps {
   activeFilter: Filters;
-  settings: ToDoSettingsModel;
+  appearance: ToDoAppearanceRecord;
   tasks: OrderedMap<number, TaskModel>;
   removeTask(index: number): void;
   toggleFinished(index: number): void;
@@ -16,10 +16,10 @@ interface IToDoListProps {
 export class ToDoList extends React.Component<IToDoListProps> {
   render() {
     const toDoItemsList = this.filterTasks(this.props.tasks)
-      .entrySeq()
+      .toArray()
       .map(([ key, task ]) => (
         <ToDoItem
-          appearance={this.props.settings.appearance}
+          appearance={this.props.appearance}
           task={task}
           key={key}
           removeTask={() => this.props.removeTask(key)}
@@ -37,8 +37,10 @@ export class ToDoList extends React.Component<IToDoListProps> {
           return !task.finished;
         case Filters.FINISHED:
           return task.finished;
-        default:
+        case Filters.ALL:
           return true;
+        default:
+          throw new Error('undefined filtering parameter passed!');
       }
     });
   };

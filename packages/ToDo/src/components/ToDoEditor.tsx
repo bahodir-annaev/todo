@@ -14,16 +14,18 @@ class EditorStateRecord extends Record({
   priority: Priorities.PRIORITY_NORMAL,
 }) {}
 
+const DEFAULT_EDITOR_STATE = new EditorStateRecord();
+
 interface IToDoEditorState {
   editorState: EditorStateRecord;
 }
 export class ToDoEditor extends React.Component<IToDoEditorProps, IToDoEditorState> {
-  readonly state = { editorState: new EditorStateRecord() };
+  readonly state = { editorState: DEFAULT_EDITOR_STATE };
 
   handleAdd = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     this.props.addTask(TaskModel.create(this.state.editorState.toJS()));
-    this.setState({ editorState: new EditorStateRecord() });
+    this.setState({ editorState: DEFAULT_EDITOR_STATE });
   };
 
   handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
