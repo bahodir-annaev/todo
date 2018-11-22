@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ToDoItem component should render 1`] = `
+exports[`TodoItem component should render 1`] = `
 <div
   className="item-container"
 >

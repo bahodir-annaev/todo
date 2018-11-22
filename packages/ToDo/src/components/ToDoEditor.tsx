@@ -1,30 +1,30 @@
 import { Record } from 'immutable';
 import * as React from 'react';
-import { Priorities } from '../constants';
+import { Labels, Priorities } from '../constants';
 import { TaskModel } from '../models/TaskModel';
-import { ToDoFunctionalityRecord } from '../models/ToDoSettingsModel';
+import { TodoFunctionalityRecord } from '../models/TodoSettingsModel';
 
-interface IToDoEditorProps {
-  functionality: ToDoFunctionalityRecord;
+interface ITodoEditorProps {
+  functionality: TodoFunctionalityRecord;
   addTask(task: TaskModel): void;
 }
 
-class EditorStateRecord extends Record({
+class EditorState extends Record({
   description: '',
   priority: Priorities.PRIORITY_NORMAL,
 }) {}
 
-const DEFAULT_EDITOR_STATE = new EditorStateRecord();
+const DEFAULT_EDITOR_STATE = new EditorState();
 
-interface IToDoEditorState {
-  editorState: EditorStateRecord;
+interface ITodoEditorState {
+  editorState: EditorState;
 }
-export class ToDoEditor extends React.Component<IToDoEditorProps, IToDoEditorState> {
+export class TodoEditor extends React.Component<ITodoEditorProps, ITodoEditorState> {
   readonly state = { editorState: DEFAULT_EDITOR_STATE };
 
   handleAdd = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    this.props.addTask(TaskModel.create(this.state.editorState.toJS()));
+    this.props.addTask(TaskModel.create(this.state.editorState));
     this.setState({ editorState: DEFAULT_EDITOR_STATE });
   };
 
@@ -34,14 +34,14 @@ export class ToDoEditor extends React.Component<IToDoEditorProps, IToDoEditorSta
 
   handlePriorityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     this.setState({
-      editorState: this.state.editorState.set('priority', parseInt(event.target.value, 10)),
+      editorState: this.state.editorState.set('priority', event.target.value as Priorities),
     });
   };
 
   render() {
     return (
       <div>
-        <h3>Add new todo</h3>
+        <h3>{Labels.ADD_NEW}</h3>
         <div>
           <form onSubmit={this.handleAdd}>
             <input
@@ -62,7 +62,7 @@ export class ToDoEditor extends React.Component<IToDoEditorProps, IToDoEditorSta
                 <option value={Priorities.PRIORITY_HIGH}>High</option>
               </select>
             ) : null}
-            <button type='submit'>Add</button>
+            <button type='submit'>{Labels.ADD_BUTTON}</button>
           </form>
         </div>
       </div>

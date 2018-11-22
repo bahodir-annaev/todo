@@ -1,16 +1,17 @@
 import * as React from 'react';
+import { Labels } from '../constants';
 import { TaskModel } from '../models/TaskModel';
-import { ToDoAppearanceRecord } from '../models/ToDoSettingsModel';
+import { TodoAppearanceRecord } from '../models/TodoSettingsModel';
 
-interface IToDoItemProps {
-  appearance: ToDoAppearanceRecord;
+interface ITodoItemProps {
+  appearance: TodoAppearanceRecord;
   task: TaskModel;
   removeTask(event: React.MouseEvent): void;
   toggleFinished(event: React.ChangeEvent<HTMLInputElement>): void;
 }
 
-export class ToDoItem extends React.Component<IToDoItemProps> {
-  getFinishedTaskStyle = (appearance: ToDoAppearanceRecord) => {
+export class TodoItem extends React.Component<ITodoItemProps> {
+  getFinishedTaskStyle = (appearance: TodoAppearanceRecord) => {
     const cssProperty =
       appearance.finishedTask.applyTo === 'background' ? 'backgroundColor' : 'color';
     const style: React.CSSProperties = {};
@@ -36,7 +37,7 @@ export class ToDoItem extends React.Component<IToDoItemProps> {
         >
           {this.props.task.description}
         </span>
-        <button onClick={this.props.removeTask}>Remove</button>
+        <button onClick={this.props.removeTask}>{Labels.REMOVE_BUTTON}</button>
       </div>
     );
   }

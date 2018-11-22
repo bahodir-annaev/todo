@@ -1,77 +1,54 @@
 import { OrderedMap, Record } from 'immutable';
 import * as React from 'react';
-import { Filters } from '../constants';
+import { Filters, Labels } from '../constants';
 import { TaskModel } from '../models/TaskModel';
-import { ToDoSettingsModel } from '../models/ToDoSettingsModel';
+import { TodoSettingsModel } from '../models/TodoSettingsModel';
+import { TodoStateModel } from '../models/TodoStateModel';
+import { ITodoUpdateModel } from '../models/TodoUpdateModel';
 import { Filter } from './Filter';
-import { ToDoEditor } from './ToDoEditor';
-import { ToDoList } from './ToDoList';
+import { TodoEditor } from './TodoEditor';
+import { TodoList } from './TodoList';
 
-interface IToDoProps {
-  activeFilter: Filters;
-  settings: ToDoSettingsModel;
-  tasks: TaskModel[];
+interface ITodoProps {
+  settings: TodoSettingsModel;
+  state: TodoStateModel;
+  onChange(update: IUpdateState): void;
 }
 
-class ToDoStateRecord extends Record({
+class TodoState extends Record({
   activeFilter: Filters.ALL,
   tasks: OrderedMap<number, TaskModel>(),
 }) {}
 
-interface IToDoAppState {
-  todoState: ToDoStateRecord;
-}
-
-export class ToDo extends React.Component<IToDoProps, IToDoAppState> {
-  readonly state = {
-    todoState: new ToDoStateRecord({
-      activeFilter: this.props.activeFilter,
-      tasks: OrderedMap(this.props.tasks.map((task) => [ task.id, task ] as [number, TaskModel])),
-    }),
-  };
-
+export class Todo extends React.Component<ITodoProps> {
   addTask = (newTask: TaskModel) => {
-    this.setState((oldState) => {
-      return {
-        todoState: oldState.todoState.update('tasks', (oldTasks) =>
-          oldTasks.set(newTask.id, newTask),
-        ),
-      };
-    });
+    this.props.onChange({ data: newTask, type: 'ADD_TASK' });
   };
 
   changeFilter = (filterToActivate: Filters) => {
-    this.setState((oldState) => {
-      return { todoState: oldState.todoState.set('activeFilter', filterToActivate) };
-    });
+    this.props.onChange({ data: filterToActivate, type: 'CHANGE_FILTER' });
   };
 
   removeTask = (removeTaskId: number) => {
-    this.setState((oldState) => {
-      const updatedState = oldState.todoState.update('tasks', (tasks) => {
-        return tasks.filter((_, key) => key !== removeTaskId);
-      });
-
-      return { todoState: updatedState };
-    });
+    this.props.onChange({ data: removeTaskId, type: 'REMOVE_TASK' });
   };
 
   render() {
     return (
-      <div>
-        <h1>TO DOs</h1>
-        <ToDoEditor addTask={this.addTask} functionality={this.props.settings.functionality} />
-        <ToDoList
+      <div className='Todo'>
+        <h1>{Labels.TODO_NAME}</h1>
+        <TodoEditor addTask={this.addTask} functionality={this.props.settings.functionality} />
+        <TodoList
           appearance={this.props.settings.appearance}
-          activeFilter={this.state.todoState.activeFilter}
-          tasks={this.state.todoState.tasks}
+          activeFilter={this.props.state.activeFilter}
+          tasks={this.props.state.tasks}
           removeTask={this.removeTask}
           toggleFinished={this.toggleFinished}
         />
 
         <Filter
           showFiltering={this.props.settings.functionality.filtering}
-          activeFilter={this.state.todoState.activeFilter}
+          activeFilter={this.props.state.activeFilter}
           changeFilter={this.changeFilter}
         />
       </div>
@@ -79,12 +56,6 @@ export class ToDo extends React.Component<IToDoProps, IToDoAppState> {
   }
 
   toggleFinished = (toggleTaskId: number) => {
-    this.setState((oldState) => {
-      const updatedState = oldState.todoState.update('tasks', (tasks) => {
-        return tasks.update(toggleTaskId, (task) => task.toggle());
-      });
-
-      return { todoState: updatedState };
-    });
+    this.props.onChange({ data: toggleTaskId, type: 'TOGGLE_FINISHED' });
   };
 }

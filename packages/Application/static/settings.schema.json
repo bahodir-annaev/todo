@@ -1,7 +1,7 @@
 {
   "$id": "/static/settings.schema.json",
-  "title": "ToDoApp",
-  "description": "Setting json schema for configuring ToDo App",
+  "title": "TodoApp",
+  "description": "Setting json schema for configuring Todo App",
   "type": "object",
   "properties": {
     "appearance": {
@@ -30,7 +30,7 @@
           "default": true
         },
         "priority": {
-          "description": "Determines wether to show priority select in ToDoEditor",
+          "description": "Determines wether to show priority select in TodoEditor",
           "type": "boolean",
           "default": true
         }

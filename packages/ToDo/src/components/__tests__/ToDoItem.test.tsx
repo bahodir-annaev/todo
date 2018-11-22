@@ -5,15 +5,15 @@ import { TaskModel } from '../../models/TaskModel';
 import {
   applyColorTo,
   TaskAppearanceRecord,
-  ToDoAppearanceRecord,
-} from '../../models/ToDoSettingsModel';
-import { ToDoItem } from '../ToDoItem';
+  TodoAppearanceRecord,
+} from '../../models/TodoSettingsModel';
+import { TodoItem } from '../TodoItem';
 
 const setup = (propsToChange: object, taskProperties?: object) => {
   const applyTo = applyColorTo.text;
   const task = TaskModel.create({ description: 'Test Task' });
   const props = {
-    appearance: new ToDoAppearanceRecord({
+    appearance: new TodoAppearanceRecord({
       finishedTask: new TaskAppearanceRecord({
         applyTo,
         color: 'grey',
@@ -27,7 +27,7 @@ const setup = (propsToChange: object, taskProperties?: object) => {
   props.appearance = props.appearance.mergeIn([ 'finishedTask' ], propsToChange);
   props.task = props.task.merge({ ...taskProperties });
 
-  const todoItem = shallow(<ToDoItem {...props} />);
+  const todoItem = shallow(<TodoItem {...props} />);
 
   return {
     props,
@@ -35,7 +35,7 @@ const setup = (propsToChange: object, taskProperties?: object) => {
   };
 };
 
-describe('ToDoItem component', () => {
+describe('TodoItem component', () => {
   test('should render', () => {
     const { todoItem } = setup({});
     expect(todoItem).toMatchSnapshot();

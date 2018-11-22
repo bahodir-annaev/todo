@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Filters } from '../constants';
+import { Filters, Labels } from '../constants';
 
 interface IFilterProps {
   activeFilter: Filters;
@@ -16,21 +16,21 @@ export const Filter = (props: IFilterProps) => {
         onClick={() => props.changeFilter(Filters.ALL)}
         className={props.activeFilter === Filters.ALL ? 'active-filter' : ''}
       >
-        All
+        {Labels.FILTER_ALL}
       </button>
       <button
         type='button'
         onClick={() => props.changeFilter(Filters.FINISHED)}
         className={props.activeFilter === Filters.FINISHED ? 'active-filter' : ''}
       >
-        Finished
+        {Labels.FILTER_FINISHED}
       </button>
       <button
         type='button'
         onClick={() => props.changeFilter(Filters.ACTIVE)}
         className={props.activeFilter === Filters.ACTIVE ? 'active-filter' : ''}
       >
-        Active
+        {Labels.FILTER_ACTIVE}
       </button>
     </div>
   ) : null;

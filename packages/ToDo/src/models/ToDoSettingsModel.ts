@@ -1,4 +1,4 @@
-import { Record, RecordOf } from 'immutable';
+import { Record } from 'immutable';
 
 export const enum applyColorTo {
   background = 'background',
@@ -10,47 +10,47 @@ export class TaskAppearanceRecord extends Record({
   color: 'grey',
 }) {}
 
-export class ToDoAppearanceRecord extends Record({ finishedTask: new TaskAppearanceRecord() }) {}
+export class TodoAppearanceRecord extends Record({ finishedTask: new TaskAppearanceRecord() }) {}
 
-export class ToDoFunctionalityRecord extends Record({ filtering: true, priority: true }) {}
+export class TodoFunctionalityRecord extends Record({ filtering: true, priority: true }) {}
 
-const DEFAULT_APPEARANCE = new ToDoAppearanceRecord();
-const DEFAULT_FUNCTIONALITY = new ToDoFunctionalityRecord();
+const DEFAULT_APPEARANCE = new TodoAppearanceRecord();
+const DEFAULT_FUNCTIONALITY = new TodoFunctionalityRecord();
 
-export class ToDoSettingsModel extends Record({
+export class TodoSettingsModel extends Record({
   appearance: DEFAULT_APPEARANCE,
   functionality: DEFAULT_FUNCTIONALITY,
 }) {
-  static create(settings?: IToDoSettingsModel) {
+  static create(settings?: ITodoSettingsModel) {
     if (settings) {
       const appearance =
         settings.appearance && settings.appearance.finishedTask
-          ? new ToDoAppearanceRecord({
+          ? new TodoAppearanceRecord({
               finishedTask: new TaskAppearanceRecord(settings.appearance.finishedTask),
             })
           : DEFAULT_APPEARANCE;
 
       const functionality = settings.functionality
-        ? new ToDoFunctionalityRecord(settings.functionality)
+        ? new TodoFunctionalityRecord(settings.functionality)
         : DEFAULT_FUNCTIONALITY;
 
-      return new ToDoSettingsModel({ appearance, functionality });
+      return new TodoSettingsModel({ appearance, functionality });
     } else {
-      return new ToDoSettingsModel();
+      return new TodoSettingsModel();
     }
   }
 }
 
-interface IToDoAppearance {
+interface ITodoAppearance {
   finishedTask: TaskAppearanceRecord;
 }
 
-interface IToDoFunctionality {
+interface ITodoFunctionality {
   filtering: boolean;
   priority: boolean;
 }
 
-interface IToDoSettingsModel {
-  appearance?: IToDoAppearance;
-  functionality?: IToDoFunctionality;
+interface ITodoSettingsModel {
+  appearance?: ITodoAppearance;
+  functionality?: ITodoFunctionality;
 }

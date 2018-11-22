@@ -9,10 +9,10 @@ export class TaskModel extends Record({
   priority: Priorities.PRIORITY_NORMAL,
 }) {
   constructor(props: Partial<TaskModel>) {
+    super(props);
+
     if (props && !props.id) {
-      super({ ...props, id: id++ } as Partial<TaskModel>);
-    } else {
-      super(props);
+      return this.set('id', id++);
     }
   }
 

@@ -2,23 +2,23 @@ import { OrderedMap } from 'immutable';
 import * as React from 'react';
 import { Filters } from '../constants';
 import { TaskModel } from '../models/TaskModel';
-import { ToDoAppearanceRecord } from '../models/ToDoSettingsModel';
-import { ToDoItem } from './ToDoItem';
+import { TodoAppearanceRecord } from '../models/TodoSettingsModel';
+import { TodoItem } from './TodoItem';
 
-interface IToDoListProps {
+interface ITodoListProps {
   activeFilter: Filters;
-  appearance: ToDoAppearanceRecord;
+  appearance: TodoAppearanceRecord;
   tasks: OrderedMap<number, TaskModel>;
   removeTask(index: number): void;
   toggleFinished(index: number): void;
 }
 
-export class ToDoList extends React.Component<IToDoListProps> {
+export class TodoList extends React.Component<ITodoListProps> {
   render() {
     const toDoItemsList = this.filterTasks(this.props.tasks)
       .toArray()
       .map(([ key, task ]) => (
-        <ToDoItem
+        <TodoItem
           appearance={this.props.appearance}
           task={task}
           key={key}
