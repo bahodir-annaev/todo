@@ -1,10 +1,9 @@
-import { OrderedMap, Record } from 'immutable';
 import * as React from 'react';
-import { Filters, Labels } from '../constants';
+import { Filters, Labels, UpdateTypes } from '../constants';
 import { TaskModel } from '../models/TaskModel';
 import { TodoSettingsModel } from '../models/TodoSettingsModel';
 import { TodoStateModel } from '../models/TodoStateModel';
-import { ITodoUpdateModel } from '../models/TodoUpdateModel';
+import { TodoUpdateModel } from '../models/TodoUpdateModel';
 import { Filter } from './Filter';
 import { TodoEditor } from './TodoEditor';
 import { TodoList } from './TodoList';
@@ -12,25 +11,24 @@ import { TodoList } from './TodoList';
 interface ITodoProps {
   settings: TodoSettingsModel;
   state: TodoStateModel;
-  onChange(update: IUpdateState): void;
+  onChange(update: TodoUpdateModel): void;
 }
-
-class TodoState extends Record({
-  activeFilter: Filters.ALL,
-  tasks: OrderedMap<number, TaskModel>(),
-}) {}
 
 export class Todo extends React.Component<ITodoProps> {
   addTask = (newTask: TaskModel) => {
-    this.props.onChange({ data: newTask, type: 'ADD_TASK' });
+    this.props.onChange(TodoUpdateModel.create({ data: newTask, type: UpdateTypes.ADD_TASK }));
   };
 
   changeFilter = (filterToActivate: Filters) => {
-    this.props.onChange({ data: filterToActivate, type: 'CHANGE_FILTER' });
+    this.props.onChange(
+      TodoUpdateModel.create({ data: filterToActivate, type: UpdateTypes.CHANGE_FILTER }),
+    );
   };
 
   removeTask = (removeTaskId: number) => {
-    this.props.onChange({ data: removeTaskId, type: 'REMOVE_TASK' });
+    this.props.onChange(
+      TodoUpdateModel.create({ data: removeTaskId, type: UpdateTypes.REMOVE_TASK }),
+    );
   };
 
   render() {
@@ -56,6 +54,8 @@ export class Todo extends React.Component<ITodoProps> {
   }
 
   toggleFinished = (toggleTaskId: number) => {
-    this.props.onChange({ data: toggleTaskId, type: 'TOGGLE_FINISHED' });
+    this.props.onChange(
+      TodoUpdateModel.create({ data: toggleTaskId, type: UpdateTypes.TOGGLE_FINISHED }),
+    );
   };
 }

@@ -2,10 +2,10 @@ import { Record } from 'immutable';
 import * as React from 'react';
 import { Labels, Priorities } from '../constants';
 import { TaskModel } from '../models/TaskModel';
-import { TodoFunctionalityRecord } from '../models/TodoSettingsModel';
+import { TodoFunctionality } from '../models/TodoSettingsModel';
 
 interface ITodoEditorProps {
-  functionality: TodoFunctionalityRecord;
+  functionality: TodoFunctionality;
   addTask(task: TaskModel): void;
 }
 

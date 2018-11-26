@@ -5,17 +5,17 @@ export const enum applyColorTo {
   text = 'text',
 }
 
-export class TaskAppearanceRecord extends Record({
+export class TaskAppearance extends Record({
   applyTo: applyColorTo.background,
   color: 'grey',
 }) {}
 
-export class TodoAppearanceRecord extends Record({ finishedTask: new TaskAppearanceRecord() }) {}
+export class TodoAppearance extends Record({ finishedTask: new TaskAppearance() }) {}
 
-export class TodoFunctionalityRecord extends Record({ filtering: true, priority: true }) {}
+export class TodoFunctionality extends Record({ filtering: true, priority: true }) {}
 
-const DEFAULT_APPEARANCE = new TodoAppearanceRecord();
-const DEFAULT_FUNCTIONALITY = new TodoFunctionalityRecord();
+const DEFAULT_APPEARANCE = new TodoAppearance();
+const DEFAULT_FUNCTIONALITY = new TodoFunctionality();
 
 export class TodoSettingsModel extends Record({
   appearance: DEFAULT_APPEARANCE,
@@ -25,13 +25,13 @@ export class TodoSettingsModel extends Record({
     if (settings) {
       const appearance =
         settings.appearance && settings.appearance.finishedTask
-          ? new TodoAppearanceRecord({
-              finishedTask: new TaskAppearanceRecord(settings.appearance.finishedTask),
+          ? new TodoAppearance({
+              finishedTask: new TaskAppearance(settings.appearance.finishedTask),
             })
           : DEFAULT_APPEARANCE;
 
       const functionality = settings.functionality
-        ? new TodoFunctionalityRecord(settings.functionality)
+        ? new TodoFunctionality(settings.functionality)
         : DEFAULT_FUNCTIONALITY;
 
       return new TodoSettingsModel({ appearance, functionality });
@@ -42,12 +42,12 @@ export class TodoSettingsModel extends Record({
 }
 
 interface ITodoAppearance {
-  finishedTask: TaskAppearanceRecord;
+  finishedTask?: TaskAppearance;
 }
 
 interface ITodoFunctionality {
-  filtering: boolean;
-  priority: boolean;
+  filtering?: boolean;
+  priority?: boolean;
 }
 
 interface ITodoSettingsModel {

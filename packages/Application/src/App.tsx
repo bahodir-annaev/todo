@@ -1,12 +1,13 @@
 import {
   Filters,
-  ITodoUpdateModel,
   TaskModel,
   Todo,
   TodoSettingsModel,
   TodoStateModel,
+  TodoUpdateModel,
+  UpdateTypes,
 } from '@pkg/todo';
-import { OrderedMap, Record } from 'immutable';
+import { OrderedMap } from 'immutable';
 import * as React from 'react';
 
 interface IAppProps {
@@ -27,36 +28,42 @@ export class App extends React.Component<IAppProps, IAppState> {
     }),
   };
 
-  onChange = (update: ITodoUpdateModel) => {
-    this.setState(({ todo }) => {
-      switch (update.type) {
-        case 'ADD_TASK':
-          return {
-            todo: todo.update('tasks', (tasks) => {
-              return tasks.set(update.data.id, update.data);
-            }),
-          };
-        case 'REMOVE_TASK':
-          return {
-            todo: todo.update('tasks', (tasks) => {
-              return tasks.filter((_, key) => key !== update.data);
-            }),
-          };
-        case 'CHANGE_FILTER':
-          return {
-            todo: todo.set('activeFilter', update.data as Filters),
-          };
-        case 'TOGGLE_FINISHED':
-          return {
-            todo: todo.update('tasks', (tasks) => {
-              return tasks.update(update.data as number, (task) => task.toggle());
-            }),
-          };
-        default: {
-          throw Error('Unknown update type from todo component');
+  onChange = (update: TodoUpdateModel) => {
+    this.setState(
+      ({ todo }) => {
+        switch (update.type) {
+          case UpdateTypes.ADD_TASK:
+            return {
+              todo: todo.update('tasks', (tasks) => {
+                return tasks.set(update.data.id, update.data);
+              }),
+            };
+          case UpdateTypes.REMOVE_TASK:
+            return {
+              todo: todo.set('tasks', todo.tasks.delete(update.data)),
+            };
+          case UpdateTypes.CHANGE_FILTER:
+            return {
+              todo: todo.set('activeFilter', update.data),
+            };
+          case UpdateTypes.TOGGLE_FINISHED:
+            return {
+              todo: todo.update('tasks', (tasks) => {
+                return tasks.update(update.data, (task) => task.toggle());
+              }),
+            };
+          default: {
+            throw Error(`Unknown update type [${update.type}] from todo component`);
+          }
         }
-      }
-    });
+      },
+      () => {
+        // tslint:disable-next-line:no-console
+        console.log(
+          `Update todo state with type [${update.type}] and data [${update.data.toString()}]`,
+        );
+      },
+    );
   };
 
   render() {

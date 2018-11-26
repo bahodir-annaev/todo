@@ -10,6 +10,13 @@ export const enum Filters {
   ACTIVE = 'filter_active',
 }
 
+export const enum UpdateTypes {
+  ADD_TASK = 'ADD_TASK',
+  CHANGE_FILTER = 'CHANGE_FILTER',
+  REMOVE_TASK = 'REMOVE_TASK',
+  TOGGLE_FINISHED = 'TOGGLE_FINISHED',
+}
+
 export const enum Labels {
   TODO_NAME = 'TO DOs',
   ADD_BUTTON = 'Add',
