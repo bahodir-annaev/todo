@@ -2,19 +2,15 @@ import { shallow } from 'enzyme';
 import * as React from 'react';
 
 import { TaskModel } from '../../models/TaskModel';
-import {
-  applyColorTo,
-  TaskAppearanceRecord,
-  TodoAppearanceRecord,
-} from '../../models/TodoSettingsModel';
+import { applyColorTo, TaskAppearance, TodoAppearance } from '../../models/TodoSettingsModel';
 import { TodoItem } from '../TodoItem';
 
 const setup = (propsToChange: object, taskProperties?: object) => {
   const applyTo = applyColorTo.text;
   const task = TaskModel.create({ description: 'Test Task' });
   const props = {
-    appearance: new TodoAppearanceRecord({
-      finishedTask: new TaskAppearanceRecord({
+    appearance: new TodoAppearance({
+      finishedTask: new TaskAppearance({
         applyTo,
         color: 'grey',
       }),

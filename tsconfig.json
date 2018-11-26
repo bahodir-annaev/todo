@@ -28,7 +28,7 @@
   ],
   "include": [
       "src/**/*",
-      "packages/ToDo",
+      "packages/Todo",
       "packages/Application"
   ]
 }
