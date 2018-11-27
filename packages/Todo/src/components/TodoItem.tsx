@@ -32,7 +32,7 @@ export class TodoItem extends React.Component<ITodoItemProps> {
         <label className='todo-item__description' style={finished}>
           {this.props.task.description}
         </label>
-        <button onClick={this.props.removeTask} className='todo-item__remove'>
+        <button onClick={this.props.removeTask} className='button'>
           {this.context.removeButton}
         </button>
       </div>
