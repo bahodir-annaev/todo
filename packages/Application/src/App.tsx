@@ -68,8 +68,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
   render() {
     return (
-      <div id='main'>
-        <Todo state={this.state.todo} onChange={this.onChange} settings={this.props.settings} />
+      <div className='app'>
         <Todo state={this.state.todo} onChange={this.onChange} settings={this.props.settings} />
       </div>
     );

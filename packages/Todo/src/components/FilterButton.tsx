@@ -13,7 +13,7 @@ export const FilterButton = (props: IFilterButtonProps) => {
     <button
       type='button'
       onClick={() => props.onClick(props.filterType)}
-      className={props.isActive ? 'active-filter' : ''}
+      className={`${props.isActive ? 'filter__button--active' : ''} filter__button`}
     >
       {props.label}
     </button>

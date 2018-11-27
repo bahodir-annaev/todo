@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Labels } from '../constants';
+import { LanguageContext } from '../LanguageContext';
 import { TaskModel } from '../models/TaskModel';
 import { TodoAppearance } from '../models/TodoSettingsModel';
 
@@ -22,20 +22,22 @@ export class TodoItem extends React.Component<ITodoItemProps> {
       : {};
 
     return (
-      <div className='item-container'>
+      <div className={`${this.props.task.finished ? 'todo-item--finished' : ''} todo-item`}>
         <input
+          className='todo-item__checkbox'
           type='checkbox'
           onChange={this.props.toggleFinished}
           checked={this.props.task.finished}
         />
-        <span
-          className={`${this.props.task.finished ? 'finished' : ''} item-desc`}
-          style={finished}
-        >
+        <label className='todo-item__description' style={finished}>
           {this.props.task.description}
-        </span>
-        <button onClick={this.props.removeTask}>{Labels.REMOVE_BUTTON}</button>
+        </label>
+        <button onClick={this.props.removeTask} className='todo-item__remove'>
+          {this.context.removeButton}
+        </button>
       </div>
     );
   }
 }
+
+TodoItem.contextType = LanguageContext;

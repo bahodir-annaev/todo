@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Filters, Labels, UpdateTypes } from '../constants';
+import { LanguageContext } from '../LanguageContext';
+import { Filters, UpdateTypes } from '../constants';
 import { TaskModel } from '../models/TaskModel';
 import { TodoSettingsModel } from '../models/TodoSettingsModel';
 import { TodoStateModel } from '../models/TodoStateModel';
@@ -15,6 +16,7 @@ interface ITodoProps {
 }
 
 export class Todo extends React.Component<ITodoProps> {
+  static contextType = LanguageContext;
   addTask = (newTask: TaskModel) => {
     this.props.onChange(TodoUpdateModel.create({ data: newTask, type: UpdateTypes.ADD_TASK }));
   };
@@ -33,8 +35,10 @@ export class Todo extends React.Component<ITodoProps> {
 
   render() {
     return (
-      <div className='Todo'>
-        <h1>{Labels.TODO_NAME}</h1>
+      <div className='todo'>
+        <div className='todo__header'>
+          <h1 className='todo__app-name'>{this.context.appName}</h1>
+        </div>
         <TodoEditor addTask={this.addTask} functionality={this.props.settings.functionality} />
         <TodoList
           appearance={this.props.settings.appearance}
@@ -59,3 +63,5 @@ export class Todo extends React.Component<ITodoProps> {
     );
   };
 }
+
+TodoEditor.contextType = LanguageContext;

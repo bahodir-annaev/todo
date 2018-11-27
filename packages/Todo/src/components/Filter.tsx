@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Filters, Labels } from '../constants';
+import { LanguageContext } from '../LanguageContext';
+import { Filters } from '../constants';
 import { FilterButton } from './FilterButton';
 
 interface IFilterProps {
@@ -10,26 +11,29 @@ interface IFilterProps {
 
 export const Filter = (props: IFilterProps) => {
   return props.showFiltering ? (
-    <div className='filter-container'>
-      Filter
-      <FilterButton
-        filterType={Filters.ALL}
-        label={Labels.FILTER_ALL}
-        onClick={props.changeFilter}
-        isActive={props.activeFilter === Filters.ALL}
-      />
-      <FilterButton
-        filterType={Filters.FINISHED}
-        label={Labels.FILTER_FINISHED}
-        onClick={props.changeFilter}
-        isActive={props.activeFilter === Filters.FINISHED}
-      />
-      <FilterButton
-        filterType={Filters.ACTIVE}
-        label={Labels.FILTER_ACTIVE}
-        onClick={props.changeFilter}
-        isActive={props.activeFilter === Filters.ACTIVE}
-      />
-    </div>
+    <LanguageContext.Consumer>
+      {(context) => (
+        <div className='filter'>
+          <FilterButton
+            filterType={Filters.ALL}
+            label={context.filterAllButton}
+            onClick={props.changeFilter}
+            isActive={props.activeFilter === Filters.ALL}
+          />
+          <FilterButton
+            filterType={Filters.FINISHED}
+            label={context.filterFinishedButton}
+            onClick={props.changeFilter}
+            isActive={props.activeFilter === Filters.FINISHED}
+          />
+          <FilterButton
+            filterType={Filters.ACTIVE}
+            label={context.filterActiveButton}
+            onClick={props.changeFilter}
+            isActive={props.activeFilter === Filters.ACTIVE}
+          />
+        </div>
+      )}
+    </LanguageContext.Consumer>
   ) : null;
 };

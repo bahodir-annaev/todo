@@ -27,7 +27,7 @@ export class TodoList extends React.Component<ITodoListProps> {
         />
       ));
 
-    return <div id='task-list'>{toDoItemsList}</div>;
+    return <div className='todo-list'>{toDoItemsList}</div>;
   }
 
   private filterTasks = (tasks: OrderedMap<number, TaskModel>) => {

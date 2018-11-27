@@ -1,0 +1,11 @@
+{
+  "appName": "TODOs",
+  "addNew": "Add New Todo",
+  "enterDescription": "Enter description",
+  "priority": "Priority",
+  "addButton": "Add",
+  "removeButton": "Remove",
+  "filterAllButton": "All",
+  "filterActiveButton": "Active",
+  "filterFinishedButton": "Finished"
+}

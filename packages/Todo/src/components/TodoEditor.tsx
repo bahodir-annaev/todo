@@ -29,30 +29,37 @@ export class TodoEditor extends React.Component<ITodoEditorProps, ITodoEditorSta
   };
 
   handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ editorState: this.state.editorState.set('description', event.target.value) });
+    event.persist();
+    this.setState((oldState) => {
+      return { editorState: oldState.editorState.set('description', event.target.value) };
+    });
   };
 
   handlePriorityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    this.setState({
-      editorState: this.state.editorState.set('priority', event.target.value as Priorities),
+    event.persist();
+    this.setState((oldState) => {
+      return {
+        editorState: oldState.editorState.set('priority', event.target.value as Priorities),
+      };
     });
   };
 
   render() {
     return (
-      <div>
-        <h3>{Labels.ADD_NEW}</h3>
+      <div className='todo-editor'>
+        <h4 className='todo-editor__label'>{this.context.addNew}</h4>
         <div>
-          <form onSubmit={this.handleAdd}>
+          <form onSubmit={this.handleAdd} className='todo-editor__form'>
             <input
+              className='todo-editor__description'
               type='text'
               value={this.state.editorState.description}
               onChange={this.handleDescriptionChange}
-              placeholder='Enter description'
+              placeholder={this.context.enterDescription}
             />
-            <label htmlFor='task-priority'> Priority </label>
             {this.props.functionality.priority ? (
               <select
+                className='todo-editor__priority'
                 id='task-priority'
                 value={this.state.editorState.priority}
                 onChange={this.handlePriorityChange}
@@ -62,7 +69,9 @@ export class TodoEditor extends React.Component<ITodoEditorProps, ITodoEditorSta
                 <option value={Priorities.PRIORITY_HIGH}>High</option>
               </select>
             ) : null}
-            <button type='submit'>{Labels.ADD_BUTTON}</button>
+            <button className='todo-editor__submit button' type='submit'>
+              {this.context.addButton}
+            </button>
           </form>
         </div>
       </div>
