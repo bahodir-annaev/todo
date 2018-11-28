@@ -7,7 +7,6 @@ import { TodoItem } from './TodoItem';
 
 interface ITodoListProps {
   activeFilter: Filters;
-  appearance: TodoAppearance;
   tasks: OrderedMap<number, TaskModel>;
   removeTask(index: number): void;
   toggleFinished(index: number): void;
@@ -19,7 +18,6 @@ export class TodoList extends React.Component<ITodoListProps> {
       .toArray()
       .map(([ key, task ]) => (
         <TodoItem
-          appearance={this.props.appearance}
           task={task}
           key={key}
           removeTask={() => this.props.removeTask(key)}
@@ -27,7 +25,7 @@ export class TodoList extends React.Component<ITodoListProps> {
         />
       ));
 
-    return <div className='todo-list'>{toDoItemsList}</div>;
+    return <div className='Container'>{toDoItemsList}</div>;
   }
 
   private filterTasks = (tasks: OrderedMap<number, TaskModel>) => {

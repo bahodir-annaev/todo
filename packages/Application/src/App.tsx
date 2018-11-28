@@ -1,5 +1,6 @@
 import {
   Filters,
+  SettingsContext,
   TaskModel,
   Todo,
   TodoSettingsModel,
@@ -68,8 +69,10 @@ export class App extends React.Component<IAppProps, IAppState> {
 
   render() {
     return (
-      <div className='app'>
-        <Todo state={this.state.todo} onChange={this.onChange} settings={this.props.settings} />
+      <div className='App'>
+        <SettingsContext.Provider value={this.props.settings}>
+          <Todo state={this.state.todo} onChange={this.onChange} />
+        </SettingsContext.Provider>
       </div>
     );
   }

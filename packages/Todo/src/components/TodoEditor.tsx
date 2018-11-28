@@ -1,11 +1,12 @@
 import { Record } from 'immutable';
 import * as React from 'react';
-import { Labels, Priorities } from '../constants';
+import { Priorities } from '../constants';
+import { LanguageContext } from '../contexts/LanguageContext';
+import { SettingsContext } from '../contexts/SettingsContext';
 import { TaskModel } from '../models/TaskModel';
 import { TodoFunctionality } from '../models/TodoSettingsModel';
 
 interface ITodoEditorProps {
-  functionality: TodoFunctionality;
   addTask(task: TaskModel): void;
 }
 
@@ -46,35 +47,42 @@ export class TodoEditor extends React.Component<ITodoEditorProps, ITodoEditorSta
 
   render() {
     return (
-      <div className='todo-editor'>
-        <h4 className='todo-editor__label'>{this.context.addNew}</h4>
-        <div>
-          <form onSubmit={this.handleAdd} className='todo-editor__form'>
-            <input
-              className='todo-editor__description'
-              type='text'
-              value={this.state.editorState.description}
-              onChange={this.handleDescriptionChange}
-              placeholder={this.context.enterDescription}
-            />
-            {this.props.functionality.priority ? (
-              <select
-                className='todo-editor__priority'
-                id='task-priority'
-                value={this.state.editorState.priority}
-                onChange={this.handlePriorityChange}
-              >
-                <option value={Priorities.PRIORITY_LOW}>Low</option>
-                <option value={Priorities.PRIORITY_NORMAL}>Normal</option>
-                <option value={Priorities.PRIORITY_HIGH}>High</option>
-              </select>
-            ) : null}
-            <button className='todo-editor__submit button' type='submit'>
-              {this.context.addButton}
-            </button>
-          </form>
-        </div>
-      </div>
+      <LanguageContext.Consumer>
+        {(context) => (
+          <div className='Container'>
+            <h4>{context.addNew}</h4>
+            <div>
+              <form onSubmit={this.handleAdd} className='Form'>
+                <input
+                  className='Input'
+                  type='text'
+                  value={this.state.editorState.description}
+                  onChange={this.handleDescriptionChange}
+                  placeholder={context.enterDescription}
+                />
+                <SettingsContext.Consumer>
+                  {({ functionality }) =>
+                    functionality.priority ? (
+                      <select
+                        className='Select'
+                        id='task-priority'
+                        value={this.state.editorState.priority}
+                        onChange={this.handlePriorityChange}
+                      >
+                        <option value={Priorities.PRIORITY_LOW}>{context.priorityLow}</option>
+                        <option value={Priorities.PRIORITY_NORMAL}>{context.priorityNormal}</option>
+                        <option value={Priorities.PRIORITY_HIGH}>{context.priorityHigh}</option>
+                      </select>
+                    ) : null}
+                </SettingsContext.Consumer>
+                <button className='Button' type='submit'>
+                  {context.addButton}
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+      </LanguageContext.Consumer>
     );
   }
 }

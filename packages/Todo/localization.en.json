@@ -7,5 +7,8 @@
   "removeButton": "Remove",
   "filterAllButton": "All",
   "filterActiveButton": "Active",
-  "filterFinishedButton": "Finished"
+  "filterFinishedButton": "Finished",
+  "priorityLow": "Low",
+  "priorityNormal": "Normal",
+  "priorityHigh": "High"
 }

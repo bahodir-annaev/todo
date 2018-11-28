@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Filters, Labels } from '../constants';
+import { Filters } from '../constants';
 
 interface IFilterButtonProps {
   filterType: Filters;
   isActive: boolean;
-  label: Labels;
+  label: string;
   onClick(filterToActivate: Filters): void;
 }
 
@@ -13,7 +13,7 @@ export const FilterButton = (props: IFilterButtonProps) => {
     <button
       type='button'
       onClick={() => props.onClick(props.filterType)}
-      className={`${props.isActive ? 'button--active' : ''} button`}
+      className={`${props.isActive ? 'Button--active' : ''} Button`}
     >
       {props.label}
     </button>

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { LanguageContext } from '../LanguageContext';
 import { Filters, UpdateTypes } from '../constants';
+import { LanguageContext } from '../contexts/LanguageContext';
 import { TaskModel } from '../models/TaskModel';
 import { TodoSettingsModel } from '../models/TodoSettingsModel';
 import { TodoStateModel } from '../models/TodoStateModel';
@@ -10,13 +10,11 @@ import { TodoEditor } from './TodoEditor';
 import { TodoList } from './TodoList';
 
 interface ITodoProps {
-  settings: TodoSettingsModel;
   state: TodoStateModel;
   onChange(update: TodoUpdateModel): void;
 }
 
 export class Todo extends React.Component<ITodoProps> {
-  static contextType = LanguageContext;
   addTask = (newTask: TaskModel) => {
     this.props.onChange(TodoUpdateModel.create({ data: newTask, type: UpdateTypes.ADD_TASK }));
   };
@@ -35,24 +33,21 @@ export class Todo extends React.Component<ITodoProps> {
 
   render() {
     return (
-      <div className='todo'>
-        <div className='todo__header'>
-          <h1 className='todo__app-name'>{this.context.appName}</h1>
+      <div className='Todo'>
+        <div className='Todo__Header'>
+          <h1>
+            <LanguageContext.Consumer>{(context) => context.appName}</LanguageContext.Consumer>
+          </h1>
         </div>
-        <TodoEditor addTask={this.addTask} functionality={this.props.settings.functionality} />
+        <TodoEditor addTask={this.addTask} />
         <TodoList
-          appearance={this.props.settings.appearance}
           activeFilter={this.props.state.activeFilter}
           tasks={this.props.state.tasks}
           removeTask={this.removeTask}
           toggleFinished={this.toggleFinished}
         />
 
-        <Filter
-          showFiltering={this.props.settings.functionality.filtering}
-          activeFilter={this.props.state.activeFilter}
-          changeFilter={this.changeFilter}
-        />
+        <Filter activeFilter={this.props.state.activeFilter} changeFilter={this.changeFilter} />
       </div>
     );
   }
@@ -63,5 +58,3 @@ export class Todo extends React.Component<ITodoProps> {
     );
   };
 }
-
-TodoEditor.contextType = LanguageContext;

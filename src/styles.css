@@ -5,97 +5,85 @@ body {
   font-size: 16px;
   color: #555;
 }
-.app {
+.App {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
   position: relative;
 }
 
-.todo {
+.Todo {
   margin: 2rem auto;
   width: 100%;
   max-width: 500px;
-  border-radius: 8px;
-  box-shadow: 0 0 20px #d1d1d1;
+  border-radius: .5rem;
+  box-shadow: 0 0 2rem #d1d1d1;
   overflow: hidden;
   --color-background-main: #4269e8;
 }
 
-.todo__header {
+.Todo__Header {
   color: #fff;
   background-color: var(--color-background-main);
   text-align: center;
   padding: 1rem 2rem;
 }
 
-.todo__app-name {
-  margin: 0;
-  padding: 0;
+.Todo__Item {
+  padding: .5rem 0;
+  font-size: .8rem;
+}
+.Todo__Item--finished {
+  text-decoration: line-through;
 }
 
-.todo-editor {
+.Container {
   padding: 1rem 2rem;
 }
 
-.todo-editor__label {
-  margin: 0;
-  font-size: 1rem;
-}
-
-.todo-editor__description {
+.Input {
+  /* Input */
   border: none;
   border-bottom: 1px solid #d1d1d1;
-  width: 250px;
-  margin-right: 8px;
+  width: 16rem;
+  margin-right: .3rem;
 }
-.todo-editor__description:focus {
+.Input:focus {
   outline: none;
   border-bottom: 1px solid var(--color-background-main);
 }
-.todo-editor__priority {
+
+.Select {
+  display: inline-block;
   margin: 5px 0;
 }
 
-.button {
+.Button {
   background: transparent;
   color: var(--color-background-main);
   border: 1px solid var(--color-background-main);
   border-radius: .2rem;
   display: inline-block;
-  margin: 0 5px;
-  height: 1.2rem;
+  margin: 0 .3rem;
   cursor: pointer;
+  font-size: .9rem;
+  padding: .2rem .8rem;
 }
 
-.button--active {
+.Button:hover {
+  background: var(--color-background-main);
+  color: #fff;
+}
+
+.Button--active {
   font-weight: bold;
 }
 
-.todo-list {
-  padding: 1rem 2rem;
-  font-size: .8rem;
-}
-
-.todo-item {
-  padding: .5rem 0;
-  font-size: .8rem;
-}
-.todo-item--finished {
-  text-decoration: line-through;
-}
-
-.todo-item__checkbox {
-  margin: 0;
+.Checkbox {
+  margin: 0 .3rem;
   padding: 0;
 }
 
-.todo-item__description {
-  padding: 0 5px;
-}
-
-.filter {
-  padding: 1rem 2rem;
+.Text--Center {
   text-align: center;
-  margin-bottom: 2rem;
 }
