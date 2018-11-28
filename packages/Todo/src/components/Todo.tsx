@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Filters, UpdateTypes } from '../constants';
 import { LanguageContext } from '../contexts/LanguageContext';
 import { TaskModel } from '../models/TaskModel';
-import { TodoSettingsModel } from '../models/TodoSettingsModel';
 import { TodoStateModel } from '../models/TodoStateModel';
 import { TodoUpdateModel } from '../models/TodoUpdateModel';
 import { Filter } from './Filter';

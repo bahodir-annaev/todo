@@ -4,7 +4,6 @@ import { Priorities } from '../constants';
 import { LanguageContext } from '../contexts/LanguageContext';
 import { SettingsContext } from '../contexts/SettingsContext';
 import { TaskModel } from '../models/TaskModel';
-import { TodoFunctionality } from '../models/TodoSettingsModel';
 
 interface ITodoEditorProps {
   addTask(task: TaskModel): void;
@@ -52,7 +51,7 @@ export class TodoEditor extends React.Component<ITodoEditorProps, ITodoEditorSta
           <div className='Container'>
             <h4>{context.addNew}</h4>
             <div>
-              <form onSubmit={this.handleAdd} className='Form'>
+              <form onSubmit={this.handleAdd}>
                 <input
                   className='Input'
                   type='text'

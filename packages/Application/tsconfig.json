@@ -15,7 +15,10 @@
     "sourceMap": true,
     "allowJs": false,
     "checkJs": false,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "jsx": "react",
+    "esModuleInterop": true
+
   },
   "exclude": [
     "node_modules"

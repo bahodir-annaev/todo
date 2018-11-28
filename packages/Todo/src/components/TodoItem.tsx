@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { LanguageContext } from '../contexts/LanguageContext';
+import { SettingsContext } from '../contexts/SettingsContext';
 import { TaskModel } from '../models/TaskModel';
 import { TodoAppearance } from '../models/TodoSettingsModel';
-import { SettingsContext } from '../contexts/SettingsContext';
 
 interface ITodoItemProps {
   task: TaskModel;

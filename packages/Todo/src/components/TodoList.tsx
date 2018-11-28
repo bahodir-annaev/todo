@@ -2,7 +2,6 @@ import { OrderedMap } from 'immutable';
 import * as React from 'react';
 import { Filters } from '../constants';
 import { TaskModel } from '../models/TaskModel';
-import { TodoAppearance } from '../models/TodoSettingsModel';
 import { TodoItem } from './TodoItem';
 
 interface ITodoListProps {
