@@ -29,17 +29,17 @@ export class TodoEditor extends React.Component<ITodoEditorProps, ITodoEditorSta
   };
 
   handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.persist();
+    const value = event.target.value;
     this.setState((oldState) => {
-      return { editorState: oldState.editorState.set('description', event.target.value) };
+      return { editorState: oldState.editorState.set('description', value) };
     });
   };
 
   handlePriorityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    event.persist();
+    const value = event.target.value;
     this.setState((oldState) => {
       return {
-        editorState: oldState.editorState.set('priority', event.target.value as Priorities),
+        editorState: oldState.editorState.set('priority', value as Priorities),
       };
     });
   };
