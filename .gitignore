@@ -3,5 +3,4 @@ dist
 .cache
 .vscode
 .idea
-package-lock.json
 lerna-debug.log
